@@ -4,6 +4,7 @@ const showMoreBtn = document.getElementById("show-more-btn");
 const showLessBtn = document.getElementById("show-less-btn");
 const searchPriceStart = document.getElementById("search-price-start");
 const searchPriceEnd = document.getElementById("search-price-end");
+const searchCategory = document.getElementById("search-category");
 
 let searchQuery;
 let productsData;
@@ -29,6 +30,21 @@ const fetchAllProducts = async () => {
 const fetchListProductsKeyword = async input => {
   return fetch(
     `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products?keyword=${input}`,
+    {
+      headers: {
+        "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
+      },
+    }
+  )
+    .then(res => res.json())
+    .then(productData => {
+      return productData.hits.hits;
+    });
+};
+
+const fetchListProductsCategory = async input => {
+  return fetch(
+    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/category?keyword=${input}`,
     {
       headers: {
         "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
@@ -77,6 +93,33 @@ const filteringData = data => {
   return uniqueProducts;
 };
 
+const filteringDataCategory = (data, keyword) => {
+  let finalResult = [];
+  data.forEach(item => {
+    const productsTmp = item._source.products;
+    for (const prod of productsTmp) {
+      finalResult.push(prod);
+    }
+  });
+
+  let uniqueProducts = finalResult.reduce((accumulator, current) => {
+    if (!accumulator.find(item => item._id === current._id)) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+
+  uniqueProducts = uniqueProducts.filter(item =>
+    item.category.toString().toLowerCase().includes(keyword)
+  );
+
+  console.log(uniqueProducts);
+
+  uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
+
+  return uniqueProducts;
+};
+
 const filteringPriceData = (data, start, end) => {
   let finalResult = [];
   data.forEach(item => {
@@ -99,9 +142,7 @@ const filteringPriceData = (data, start, end) => {
 
   uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
 
-  const tmpResult = uniqueProducts.map(item => item.price);
-
-  console.log(tmpResult);
+  console.log(uniqueProducts);
 
   return uniqueProducts;
 };
@@ -211,6 +252,23 @@ searchBar.addEventListener("keydown", e => {
       searchQuery = searchBar.value;
       fetchListProductsKeyword(searchQuery).then(data => {
         const finalResult = filteringData(data);
+        renderProducts(finalResult);
+      });
+    } else {
+      fetchAllProducts().then(data => {
+        const finalResult = filteringData(data);
+        renderProducts(finalResult);
+      });
+    }
+  }
+});
+
+searchCategory.addEventListener("keydown", e => {
+  if (e.key == "Enter") {
+    if (searchCategory.value != "") {
+      searchQuery = searchCategory.value;
+      fetchListProductsCategory(searchQuery).then(data => {
+        const finalResult = filteringDataCategory(data, searchQuery);
         renderProducts(finalResult);
       });
     } else {
