@@ -1,16 +1,15 @@
-const searchBar = document.getElementById("searchBar");
 const resultList = document.getElementById("resultList");
 const showMoreBtn = document.getElementById("show-more-btn");
 const showLessBtn = document.getElementById("show-less-btn");
+const searchProduct = document.getElementById("search-product");
+const searchCategory = document.getElementById("search-category");
 const searchPriceStart = document.getElementById("search-price-start");
 const searchPriceEnd = document.getElementById("search-price-end");
-const searchCategory = document.getElementById("search-category");
+const submitQueryBtn = document.getElementById("submit-query");
 
-let searchQuery;
-let productsData;
+let items;
 let totalItems;
 let visibleItemCount = 20; // Number of items to show initially
-let items;
 
 const fetchAllProducts = async () => {
   return fetch(
@@ -27,52 +26,12 @@ const fetchAllProducts = async () => {
     });
 };
 
-const fetchListProductsKeyword = async input => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products?keyword=${input}`,
-    {
-      headers: {
-        "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
-      },
-    }
-  )
-    .then(res => res.json())
-    .then(productData => {
-      return productData.hits.hits;
-    });
-};
-
-const fetchListProductsCategory = async input => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/category?keyword=${input}`,
-    {
-      headers: {
-        "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
-      },
-    }
-  )
-    .then(res => res.json())
-    .then(productData => {
-      return productData.hits.hits;
-    });
-};
-
-const fetchListProductsPrice = async (start, end) => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/price?start=${start}&end=${end}`,
-    {
-      headers: {
-        "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
-      },
-    }
-  )
-    .then(res => res.json())
-    .then(productData => {
-      return productData.hits.hits;
-    });
-};
-
 const filteringData = data => {
+  const searchProductQuery = searchProduct.value;
+  const searchCategoryQuery = searchCategory.value;
+  const searchStartPriceQuery = searchPriceStart.value;
+  const searchEndPriceQuery = searchPriceEnd.value;
+
   let finalResult = [];
   data.forEach(item => {
     const productsTmp = item._source.products;
@@ -90,59 +49,37 @@ const filteringData = data => {
 
   uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
 
-  return uniqueProducts;
-};
+  if (searchProductQuery) {
+    const tmpProdQuery = searchProductQuery.trim().split(" ");
 
-const filteringDataCategory = (data, keyword) => {
-  let finalResult = [];
-  data.forEach(item => {
-    const productsTmp = item._source.products;
-    for (const prod of productsTmp) {
-      finalResult.push(prod);
-    }
-  });
+    uniqueProducts = uniqueProducts.filter(item =>
+      tmpProdQuery.every(word =>
+        item.product_name.toLowerCase().includes(word.toLowerCase())
+      )
+    );
+  }
 
-  let uniqueProducts = finalResult.reduce((accumulator, current) => {
-    if (!accumulator.find(item => item._id === current._id)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
+  if (searchCategoryQuery) {
+    const tmpCategoryQuery = searchCategoryQuery.trim().split(" ");
 
-  uniqueProducts = uniqueProducts.filter(item =>
-    item.category.toString().toLowerCase().includes(keyword)
-  );
+    uniqueProducts = uniqueProducts.filter(item =>
+      tmpCategoryQuery.every(word =>
+        item.category.toLowerCase().includes(word.toLowerCase())
+      )
+    );
+  }
 
-  console.log(uniqueProducts);
+  if (searchStartPriceQuery) {
+    uniqueProducts = uniqueProducts.filter(
+      item => item.price >= searchStartPriceQuery
+    );
+  }
 
-  uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
-
-  return uniqueProducts;
-};
-
-const filteringPriceData = (data, start, end) => {
-  let finalResult = [];
-  data.forEach(item => {
-    const productsTmp = item._source.products;
-    for (const prod of productsTmp) {
-      finalResult.push(prod);
-    }
-  });
-
-  let uniqueProducts = finalResult.reduce((accumulator, current) => {
-    if (!accumulator.find(item => item._id === current._id)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
-  uniqueProducts = uniqueProducts.filter(
-    item => item.price >= start && item.price <= end
-  );
-
-  uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
-
-  console.log(uniqueProducts);
+  if (searchEndPriceQuery) {
+    uniqueProducts = uniqueProducts.filter(
+      item => item.price <= searchEndPriceQuery
+    );
+  }
 
   return uniqueProducts;
 };
@@ -241,95 +178,18 @@ function updateVisibility() {
     showLessBtn.style.display = "none";
   }
 }
+
 fetchAllProducts().then(data => {
   const finalResult = filteringData(data);
   renderProducts(finalResult);
 });
 
-searchBar.addEventListener("keydown", e => {
-  if (e.key == "Enter") {
-    if (searchBar.value != "") {
-      searchQuery = searchBar.value;
-      fetchListProductsKeyword(searchQuery).then(data => {
-        const finalResult = filteringData(data);
-        renderProducts(finalResult);
-      });
-    } else {
-      fetchAllProducts().then(data => {
-        const finalResult = filteringData(data);
-        renderProducts(finalResult);
-      });
-    }
-  }
-});
+submitQueryBtn.addEventListener("click", function () {
+  fetchAllProducts().then(data => {
+    const finalResult = filteringData(data);
 
-searchCategory.addEventListener("keydown", e => {
-  if (e.key == "Enter") {
-    if (searchCategory.value != "") {
-      searchQuery = searchCategory.value;
-      fetchListProductsCategory(searchQuery).then(data => {
-        const finalResult = filteringDataCategory(data, searchQuery);
-        renderProducts(finalResult);
-      });
-    } else {
-      fetchAllProducts().then(data => {
-        const finalResult = filteringData(data);
-        renderProducts(finalResult);
-      });
-    }
-  }
-});
-
-searchPriceStart.addEventListener("keydown", e => {
-  if (e.key == "Enter") {
-    if (searchPriceStart.value != "") {
-      const startValue = searchPriceStart.value;
-      const endValue = searchPriceEnd.value;
-      if (endValue != "") {
-        fetchListProductsPrice(startValue, endValue).then(data => {
-          const finalResult = filteringPriceData(data, startValue, endValue);
-
-          const tmpRes = finalResult.map(item => item.price);
-          renderProducts(finalResult);
-        });
-      } else {
-        fetchListProductsPrice(startValue, 65000).then(data => {
-          const finalResult = filteringPriceData(data, startValue, 65000);
-          renderProducts(finalResult);
-        });
-      }
-    } else {
-      fetchAllProducts().then(data => {
-        const finalResult = filteringData(data);
-        renderProducts(finalResult);
-      });
-    }
-  }
-});
-
-searchPriceEnd.addEventListener("keydown", e => {
-  if (e.key == "Enter") {
-    if (searchPriceEnd.value != "") {
-      const startValue = searchPriceStart.value;
-      const endValue = searchPriceEnd.value;
-      if (startValue != "") {
-        fetchListProductsPrice(startValue, endValue).then(data => {
-          const finalResult = filteringPriceData(data, startValue, endValue);
-          renderProducts(finalResult);
-        });
-      } else {
-        fetchListProductsPrice(0, endValue).then(data => {
-          const finalResult = filteringPriceData(data, 0, endValue);
-          renderProducts(finalResult);
-        });
-      }
-    } else {
-      fetchAllProducts().then(data => {
-        const finalResult = filteringData(data);
-        renderProducts(finalResult);
-      });
-    }
-  }
+    renderProducts(finalResult);
+  });
 });
 
 showMoreBtn.addEventListener("click", function () {
