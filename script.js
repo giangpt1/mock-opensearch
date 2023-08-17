@@ -6,10 +6,14 @@ const searchCategory = document.getElementById("search-category");
 const searchPriceStart = document.getElementById("search-price-start");
 const searchPriceEnd = document.getElementById("search-price-end");
 const submitQueryBtn = document.getElementById("submit-query");
+const sortLowestToHighest = document.getElementById("lowest-to-highest");
+const sortHighestToLowest = document.getElementById("highest-to-lowest");
+const sortMinPrice = document.getElementById("sort-min-price");
 
 let items;
 let totalItems;
 let visibleItemCount = 20; // Number of items to show initially
+let currentProductsData;
 
 const fetchAllProducts = async () => {
   return fetch(
@@ -181,13 +185,14 @@ function updateVisibility() {
 
 fetchAllProducts().then(data => {
   const finalResult = filteringData(data);
+  currentProductsData = finalResult;
   renderProducts(finalResult);
 });
 
 submitQueryBtn.addEventListener("click", function () {
   fetchAllProducts().then(data => {
     const finalResult = filteringData(data);
-
+    currentProductsData = finalResult;
     renderProducts(finalResult);
   });
 });
@@ -201,3 +206,40 @@ showLessBtn.addEventListener("click", function () {
   visibleItemCount -= 20;
   updateVisibility();
 });
+
+sortLowestToHighest.addEventListener("click", function () {
+  const finalResult = currentProductsData.sort((a, b) => a.price - b.price);
+  renderProducts(finalResult);
+});
+
+sortHighestToLowest.addEventListener("click", function () {
+  const finalResult = currentProductsData.sort((a, b) => b.price - a.price);
+  renderProducts(finalResult);
+});
+
+sortMinPrice.addEventListener("click", function () {
+  const finalResult = currentProductsData.sort(
+    (a, b) => a.min_price - b.min_price
+  );
+  renderProducts(finalResult);
+});
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropdownClick() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function (event) {
+  if (!event.target.matches(".dropbtn")) {
+    let dropdowns = document.getElementsByClassName("dropdown-content");
+    let i;
+    for (i = 0; i < dropdowns.length; i++) {
+      let openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
+    }
+  }
+};
