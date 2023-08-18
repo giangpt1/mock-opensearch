@@ -9,6 +9,7 @@ const submitQueryBtn = document.getElementById("submit-query");
 const sortLowestToHighest = document.getElementById("lowest-to-highest");
 const sortHighestToLowest = document.getElementById("highest-to-lowest");
 const sortMinPrice = document.getElementById("sort-min-price");
+const sortRecommendation = document.getElementById("sort-recommendation");
 
 let items;
 let totalItems;
@@ -17,15 +18,11 @@ let currentProductsData;
 
 const fetchAllProducts = async () => {
   return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/all`,
-    {
-      headers: {
-        "x-api-key": "YHTdXURDcXamPN8x5vBTT2gljyI6umrR2rjISE5m",
-      },
-    }
+    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/all`
   )
     .then(res => res.json())
     .then(productData => {
+      console.log(productData);
       return productData.hits.hits;
     });
 };
@@ -38,27 +35,24 @@ const filteringData = data => {
 
   let finalResult = [];
   data.forEach(item => {
-    const productsTmp = item._source.products;
-    for (const prod of productsTmp) {
-      finalResult.push(prod);
-    }
+    finalResult.push(item._source);
   });
 
   let uniqueProducts = finalResult.reduce((accumulator, current) => {
-    if (!accumulator.find(item => item._id === current._id)) {
+    if (!accumulator.find(item => item.id === current.id)) {
       accumulator.push(current);
     }
     return accumulator;
   }, []);
 
-  uniqueProducts = uniqueProducts.sort((a, b) => a.price - b.price);
+  uniqueProducts = uniqueProducts.sort((a, b) => a.min_price - b.min_price);
 
   if (searchProductQuery) {
     const tmpProdQuery = searchProductQuery.trim().split(" ");
 
     uniqueProducts = uniqueProducts.filter(item =>
       tmpProdQuery.every(word =>
-        item.product_name.toLowerCase().includes(word.toLowerCase())
+        item.title.toLowerCase().includes(word.toLowerCase())
       )
     );
   }
@@ -68,20 +62,20 @@ const filteringData = data => {
 
     uniqueProducts = uniqueProducts.filter(item =>
       tmpCategoryQuery.every(word =>
-        item.category.toLowerCase().includes(word.toLowerCase())
+        item.category.toString().toLowerCase().includes(word.toLowerCase())
       )
     );
   }
 
   if (searchStartPriceQuery) {
     uniqueProducts = uniqueProducts.filter(
-      item => item.price >= searchStartPriceQuery
+      item => item.min_price >= searchStartPriceQuery
     );
   }
 
   if (searchEndPriceQuery) {
     uniqueProducts = uniqueProducts.filter(
-      item => item.price <= searchEndPriceQuery
+      item => item.min_price <= searchEndPriceQuery
     );
   }
 
@@ -100,22 +94,22 @@ const renderProducts = data => {
       if (j < 20) {
         htmlRow += `<div class="item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="https://www.naturalbedcompany.co.uk/wp-content/uploads/WALNUT-LEITH-MODERN-BED-WITH-CHARCOAL-LINEN-BEDDING.jpg" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[j].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
         <div class="card-body" style="padding: 10px">
-          <h5 class="card-title" style="font-weight: bold;">${data[j].product_name}</h5>
-          <p class="card-text">${data[j].category}</p>
-          <p class="card-text">${data[j].price} JP¥</p>
+          <h5 class="card-title" style="font-weight: bold;">${data[j].title}</h5>
+          <p class="card-text">${data[j]?.category}</p>
+          <p class="card-text">${data[j].min_price} ~ ${data[j].max_price} JP¥</p>
         </div>
       </div>
       </div>`;
       } else {
         htmlRow += `<div class="hidden item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="https://www.naturalbedcompany.co.uk/wp-content/uploads/WALNUT-LEITH-MODERN-BED-WITH-CHARCOAL-LINEN-BEDDING.jpg" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[j].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
         <div class="card-body" style="padding: 10px">
-          <h5 class="card-title" style="font-weight: bold;">${data[j].product_name}</h5>
-          <p class="card-text">${data[j].category}</p>
-          <p class="card-text">${data[j].price} JP¥</p>
+          <h5 class="card-title" style="font-weight: bold;">${data[j].title}</h5>
+          <p class="card-text">${data[j]?.category}</p>
+          <p class="card-text">${data[j].min_price} ~ ${data[j].max_price} JP¥</p>
         </div>
       </div>
       </div>`;
@@ -130,22 +124,22 @@ const renderProducts = data => {
     if (i < 20) {
       htmlRowFinal += `<div class="item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="https://www.naturalbedcompany.co.uk/wp-content/uploads/WALNUT-LEITH-MODERN-BED-WITH-CHARCOAL-LINEN-BEDDING.jpg" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[i].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
         <div class="card-body" style="padding: 10px">
-          <h5 class="card-title" style="font-weight: bold;">${data[i].product_name}</h5>
-          <p class="card-text">${data[i].category}</p>
-          <p class="card-text">${data[i].price} JP¥</p>
+          <h5 class="card-title" style="font-weight: bold;">${data[i].title}</h5>
+          <p class="card-text">${data[i]?.category}</p>
+          <p class="card-text">${data[i].min_price} ~ ${data[i].max_price} JP¥</p>
         </div>
       </div>
       </div>`;
     } else {
       htmlRowFinal += `<div class="hidden item col-md-2 col-sm-6 custom-col">
       <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-      <img src="https://www.naturalbedcompany.co.uk/wp-content/uploads/WALNUT-LEITH-MODERN-BED-WITH-CHARCOAL-LINEN-BEDDING.jpg" alt="Bed image" style="width: 100%; object-fit: contain">
+      <img src="${data[i].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
       <div class="card-body" style="padding: 10px">
-        <h5 class="card-title" style="font-weight: bold;">${data[i].product_name}</h5>
-        <p class="card-text">${data[i].category}</p>
-        <p class="card-text">${data[i].price} JP¥</p>
+        <h5 class="card-title" style="font-weight: bold;">${data[i].title}</h5>
+        <p class="card-text">${data[i]?.category}</p>
+        <p class="card-text">${data[i].min_price} ~ ${data[i].max_price} JP¥</p>
       </div>
     </div>
     </div>`;
@@ -208,18 +202,30 @@ showLessBtn.addEventListener("click", function () {
 });
 
 sortLowestToHighest.addEventListener("click", function () {
-  const finalResult = currentProductsData.sort((a, b) => a.price - b.price);
+  const finalResult = currentProductsData.sort(
+    (a, b) => a.min_price - b.min_price
+  );
   renderProducts(finalResult);
 });
 
 sortHighestToLowest.addEventListener("click", function () {
-  const finalResult = currentProductsData.sort((a, b) => b.price - a.price);
+  const finalResult = currentProductsData.sort(
+    (a, b) => b.min_price - a.min_price
+  );
   renderProducts(finalResult);
 });
 
 sortMinPrice.addEventListener("click", function () {
   const finalResult = currentProductsData.sort(
     (a, b) => a.min_price - b.min_price
+  );
+  renderProducts(finalResult);
+});
+
+sortRecommendation.addEventListener("click", function () {
+  console.log("oeke");
+  const finalResult = currentProductsData.sort((a, b) =>
+    a.recommendation_id.localeCompare(b.recommendation_id)
   );
   renderProducts(finalResult);
 });
