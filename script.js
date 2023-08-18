@@ -10,6 +10,7 @@ const sortLowestToHighest = document.getElementById("lowest-to-highest");
 const sortHighestToLowest = document.getElementById("highest-to-lowest");
 const sortMinPrice = document.getElementById("sort-min-price");
 const sortRecommendation = document.getElementById("sort-recommendation");
+const sortNewestOrder = document.getElementById("sort-newest-order");
 
 let items;
 let totalItems;
@@ -226,6 +227,14 @@ sortRecommendation.addEventListener("click", function () {
   console.log("oeke");
   const finalResult = currentProductsData.sort((a, b) =>
     a.recommendation_id.localeCompare(b.recommendation_id)
+  );
+  renderProducts(finalResult);
+});
+
+sortNewestOrder.addEventListener("click", function () {
+  console.log("oeke");
+  const finalResult = currentProductsData.sort((a, b) =>
+    b.collection_id.localeCompare(a.collection_id)
   );
   renderProducts(finalResult);
 });
