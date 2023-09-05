@@ -20,22 +20,38 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <div class="topnav">
-      <a class="active" href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <input id="submit-query" type="button" value="検索" />
-      <input id="search-product" type="text" placeholder="Product Name..." />
-      <input
-        id="search-category"
-        type="text"
-        placeholder="Product Category..." />
-      <input id="search-price-end" type="number" placeholder="End Price..." />
-      <input
-        id="search-price-start"
-        type="number"
-        placeholder="Start Price..." />
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#home" id="home-button">Home</a>
+
+      <div style="float: right">
+        <input
+          id="search-price-start"
+          type="number"
+          placeholder="Start Price..." />
+
+        <input id="search-price-end" type="number" placeholder="End Price..." />
+
+        <div class="autocomplete">
+          <input
+            id="search-category"
+            type="text"
+            placeholder="Product Category..." />
+        </div>
+
+        <div class="autocomplete">
+          <input
+            id="search-product"
+            type="text"
+            placeholder="Product Name..." />
+        </div>
+
+        <input
+          id="submit-query"
+          type="button"
+          value="検索"
+          style="margin-right: 30px" />
+      </div>
+    </nav>
 
     <div class="container">
       <div class="dropdown">

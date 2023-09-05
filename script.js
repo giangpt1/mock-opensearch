@@ -11,11 +11,25 @@ const sortHighestToLowest = document.getElementById("highest-to-lowest");
 const sortMinPrice = document.getElementById("sort-min-price");
 const sortRecommendation = document.getElementById("sort-recommendation");
 const sortNewestOrder = document.getElementById("sort-newest-order");
+const homeButton = document.getElementById("home-button");
 
 let items;
 let totalItems;
 let visibleItemCount = 20; // Number of items to show initially
 let currentProductsData;
+
+homeButton.addEventListener("click", () => {
+  searchProduct.value = "";
+  searchCategory.value = "";
+  searchPriceStart.value = "";
+  searchPriceEnd.value = "";
+
+  fetchAllProducts().then(data => {
+    const finalResult = filteringData(data);
+    currentProductsData = finalResult;
+    renderProducts(finalResult);
+  });
+});
 
 const fetchAllProducts = async () => {
   return fetch(
@@ -23,7 +37,6 @@ const fetchAllProducts = async () => {
   )
     .then(res => res.json())
     .then(productData => {
-      console.log(productData);
       return productData.hits.hits;
     });
 };
@@ -76,7 +89,7 @@ const filteringData = data => {
 
   if (searchEndPriceQuery) {
     uniqueProducts = uniqueProducts.filter(
-      item => item.min_price <= searchEndPriceQuery
+      item => item.max_price <= searchEndPriceQuery
     );
   }
 
@@ -224,7 +237,6 @@ sortMinPrice.addEventListener("click", function () {
 });
 
 sortRecommendation.addEventListener("click", function () {
-  console.log("oeke");
   const finalResult = currentProductsData.sort((a, b) =>
     a.recommendation_id.localeCompare(b.recommendation_id)
   );
@@ -232,7 +244,6 @@ sortRecommendation.addEventListener("click", function () {
 });
 
 sortNewestOrder.addEventListener("click", function () {
-  console.log("oeke");
   const finalResult = currentProductsData.sort((a, b) =>
     b.collection_id.localeCompare(a.collection_id)
   );
@@ -258,3 +269,80 @@ window.onclick = function (event) {
     }
   }
 };
+
+function autocomplete(input, getSuggestFunction) {
+  //Add an event listener to compare the input value with all countries
+  input.addEventListener("input", function () {
+    //Close the existing list if it is open
+    closeList();
+
+    //If the input is empty, exit the function
+    if (!this.value) return;
+
+    getSuggestFunction(this.value).then(list => {
+      closeList();
+
+      //Create a suggestions <div> and add it to the element containing the input field
+      suggestions = document.createElement("div");
+
+      suggestions.setAttribute("id", "suggestions");
+      suggestions.setAttribute("class", "autocomplete-items");
+      this.parentNode.appendChild(suggestions);
+
+      //Iterate through all entries in the list and find matches
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].toUpperCase().includes(this.value.toUpperCase())) {
+          //If a match is found, create a suggestion <div> and add it to the suggestions <div>
+          suggestion = document.createElement("div");
+          suggestion.innerHTML = list[i];
+
+          suggestion.addEventListener("click", function () {
+            input.value = this.innerHTML;
+            closeList();
+          });
+          suggestion.style.cursor = "pointer";
+
+          suggestions.appendChild(suggestion);
+        }
+      }
+    });
+  });
+
+  function closeList() {
+    let suggestions = document.getElementById("suggestions");
+    if (suggestions) {
+      suggestions.parentNode.removeChild(suggestions);
+    }
+  }
+}
+
+const getSuggestCategory = async inp => {
+  return fetch(
+    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/suggest/category?q=${inp}`
+  )
+    .then(res => res.json())
+    .then(productData => {
+      const buckets = productData.aggregations.keywords.buckets;
+      const keywordList = buckets.map(item => item.key);
+
+      // console.log(keywordList);
+
+      return keywordList;
+    });
+};
+
+const getSuggestTitle = async inp => {
+  return fetch(
+    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/suggest/title?q=${inp}`
+  )
+    .then(res => res.json())
+    .then(productData => {
+      const buckets = productData.aggregations.keywords.buckets;
+      const keywordList = buckets.map(item => item.key);
+
+      return keywordList;
+    });
+};
+
+autocomplete(searchProduct, getSuggestTitle);
+autocomplete(searchCategory, getSuggestCategory);
