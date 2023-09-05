@@ -108,7 +108,11 @@ const renderProducts = data => {
       if (j < 20) {
         htmlRow += `<div class="item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="${data[j].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[j].image_url}" alt="Bed image" style="height: 100%;
+        width: 100%;
+        max-height: 120px;
+        max-width: 100vh;
+        object-fit: contain;">
         <div class="card-body" style="padding: 10px">
           <h5 class="card-title" style="font-weight: bold;">${data[j].title}</h5>
           <p class="card-text">${data[j]?.category}</p>
@@ -119,7 +123,11 @@ const renderProducts = data => {
       } else {
         htmlRow += `<div class="hidden item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="${data[j].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[j].image_url}" alt="Bed image" style="height: 100%;
+        width: 100%;
+        max-height: 120px;
+        max-width: 100vh;
+        object-fit: contain;">
         <div class="card-body" style="padding: 10px">
           <h5 class="card-title" style="font-weight: bold;">${data[j].title}</h5>
           <p class="card-text">${data[j]?.category}</p>
@@ -138,7 +146,11 @@ const renderProducts = data => {
     if (i < 20) {
       htmlRowFinal += `<div class="item col-md-2 col-sm-6 custom-col">
         <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-        <img src="${data[i].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
+        <img src="${data[i].image_url}" alt="Bed image" style="height: 100%;
+        width: 100%;
+        max-height: 120px;
+        max-width: 100vh;
+        object-fit: contain;">
         <div class="card-body" style="padding: 10px">
           <h5 class="card-title" style="font-weight: bold;">${data[i].title}</h5>
           <p class="card-text">${data[i]?.category}</p>
@@ -149,7 +161,11 @@ const renderProducts = data => {
     } else {
       htmlRowFinal += `<div class="hidden item col-md-2 col-sm-6 custom-col">
       <div class="card" style="margin: 10px; border: 1px solid black; width: 18rem; height: 250px;">
-      <img src="${data[i].image_url}" alt="Bed image" style="width: 100%; object-fit: contain">
+      <img src="${data[i].image_url}" alt="Bed image" style="height: 100%;
+      width: 100%;
+      max-height: 120px;
+      max-width: 100vh;
+      object-fit: contain;">
       <div class="card-body" style="padding: 10px">
         <h5 class="card-title" style="font-weight: bold;">${data[i].title}</h5>
         <p class="card-text">${data[i]?.category}</p>
