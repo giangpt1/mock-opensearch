@@ -21,11 +21,69 @@ def signed_request(method, url, data=None, params=None, headers=None):
     return requests.request(method=method, url=url, headers=dict(request.headers), data=data)
     
 def lambda_handler(event, context):
+    query_data = []
+    
+    if "queryStringParameters" in event:
+        if "title" in event["queryStringParameters"]:
+            titleQuery = {
+                "regexp": {
+                    "title": {
+                        "value": ".*" + event["queryStringParameters"]["title"] + ".*",
+                        "case_insensitive": True,
+                    }
+                }
+            }
+    
+            bodyQuery = {
+                "regexp": {
+                    "body": {
+                        "value": ".*" + event["queryStringParameters"]["title"] + ".*",
+                        "case_insensitive": True,
+                    }
+                }
+            }
+    
+            query_data.append(titleQuery)
+            query_data.append(bodyQuery)
+    
+        if "category" in event["queryStringParameters"]:
+            categoryQuery = {
+                "regexp": {
+                    "category": {
+                        "value": ".*" + event["queryStringParameters"]["category"] + ".*",
+                        "case_insensitive": True,
+                    }
+                }
+            }
+            query_data.append(categoryQuery)
+            
+        if "price_low" in event["queryStringParameters"]:
+            lowPrice = {
+                "range": {
+                    "min_price": {
+                        "gte": event["queryStringParameters"]["price_low"]
+                    }
+                }
+            }
+            query_data.append(lowPrice)
+            
+        if "price_high" in event["queryStringParameters"]:
+            highPrice = {
+                "range": {
+                    "max_price": {
+                        "lte": event["queryStringParameters"]["price_high"]
+                    }
+                }
+            }
+            query_data.append(highPrice)
+  
     query = {
         "size": 100,
         "query": {
-            "match_all": {}
-        }
+            "bool": {
+                "should": query_data
+            }
+        },
     }
 
     headers = { "Content-Type": "application/json" }
