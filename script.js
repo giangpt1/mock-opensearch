@@ -13,6 +13,8 @@ const sortRecommendation = document.getElementById("sort-recommendation");
 const sortNewestOrder = document.getElementById("sort-newest-order");
 const homeButton = document.getElementById("home-button");
 
+const api_url = `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products`;
+
 let items;
 let totalItems;
 let visibleItemCount = 20; // Number of items to show initially
@@ -32,9 +34,15 @@ homeButton.addEventListener("click", () => {
 });
 
 const fetchAllProducts = async () => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/all`
-  )
+  return fetch(`${api_url}/all`)
+    .then(res => res.json())
+    .then(productData => {
+      return productData.hits.hits;
+    });
+};
+
+const fetchQueryProducts = async queryString => {
+  return fetch(`${api_url}/all?${queryString}`)
     .then(res => res.json())
     .then(productData => {
       return productData.hits.hits;
@@ -42,11 +50,6 @@ const fetchAllProducts = async () => {
 };
 
 const filteringData = data => {
-  const searchProductQuery = searchProduct.value;
-  const searchCategoryQuery = searchCategory.value;
-  const searchStartPriceQuery = searchPriceStart.value;
-  const searchEndPriceQuery = searchPriceEnd.value;
-
   let finalResult = [];
   data.forEach(item => {
     finalResult.push(item._source);
@@ -60,38 +63,6 @@ const filteringData = data => {
   }, []);
 
   uniqueProducts = uniqueProducts.sort((a, b) => a.min_price - b.min_price);
-
-  if (searchProductQuery) {
-    const tmpProdQuery = searchProductQuery.trim().split(" ");
-
-    uniqueProducts = uniqueProducts.filter(item =>
-      tmpProdQuery.every(word =>
-        item.title.toLowerCase().includes(word.toLowerCase())
-      )
-    );
-  }
-
-  if (searchCategoryQuery) {
-    const tmpCategoryQuery = searchCategoryQuery.trim().split(" ");
-
-    uniqueProducts = uniqueProducts.filter(item =>
-      tmpCategoryQuery.every(word =>
-        item.category.toString().toLowerCase().includes(word.toLowerCase())
-      )
-    );
-  }
-
-  if (searchStartPriceQuery) {
-    uniqueProducts = uniqueProducts.filter(
-      item => item.min_price >= searchStartPriceQuery
-    );
-  }
-
-  if (searchEndPriceQuery) {
-    uniqueProducts = uniqueProducts.filter(
-      item => item.max_price <= searchEndPriceQuery
-    );
-  }
 
   return uniqueProducts;
 };
@@ -214,7 +185,31 @@ fetchAllProducts().then(data => {
 });
 
 submitQueryBtn.addEventListener("click", function () {
-  fetchAllProducts().then(data => {
+  let query_data = [];
+  const searchProductQuery = searchProduct.value;
+  const searchCategoryQuery = searchCategory.value;
+  const searchStartPriceQuery = searchPriceStart.value;
+  const searchEndPriceQuery = searchPriceEnd.value;
+
+  if (searchProductQuery) {
+    query_data.push(`title=${searchProductQuery}`);
+  }
+
+  if (searchCategoryQuery) {
+    query_data.push(`category=${searchCategoryQuery}`);
+  }
+
+  if (searchStartPriceQuery) {
+    query_data.push(`price_low=${searchStartPriceQuery}`);
+  }
+
+  if (searchEndPriceQuery) {
+    query_data.push(`price_high=${searchEndPriceQuery}`);
+  }
+
+  query_data = query_data.join("&");
+
+  fetchQueryProducts(query_data).then(data => {
     const finalResult = filteringData(data);
     currentProductsData = finalResult;
     renderProducts(finalResult);
@@ -333,9 +328,7 @@ function autocomplete(input, getSuggestFunction) {
 }
 
 const getSuggestCategory = async inp => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/suggest/category?q=${inp}`
-  )
+  return fetch(`${api_url}/suggest/category?q=${inp}`)
     .then(res => res.json())
     .then(productData => {
       const buckets = productData.aggregations.keywords.buckets;
@@ -348,9 +341,7 @@ const getSuggestCategory = async inp => {
 };
 
 const getSuggestTitle = async inp => {
-  return fetch(
-    `https://8ky35k70oc.execute-api.ap-northeast-1.amazonaws.com/products/suggest/title?q=${inp}`
-  )
+  return fetch(`${api_url}/suggest/title?q=${inp}`)
     .then(res => res.json())
     .then(productData => {
       const buckets = productData.aggregations.keywords.buckets;

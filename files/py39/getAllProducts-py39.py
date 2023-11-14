@@ -32,9 +32,10 @@ url = host + "/" + index + "/_search"
 
 # Lambda execution starts here
 def lambda_handler(event, context):
+    query = {}
     query_data = []
     
-    if "queryStringParameters" in event:
+    if "queryStringParameters" in event and event["queryStringParameters"] is not None:
         if "title" in event["queryStringParameters"]:
             titleQuery = {
                 "regexp": {
@@ -90,14 +91,23 @@ def lambda_handler(event, context):
     
     # Put the user query into the query DSL for more accurate search results.
     # Note that certain fields are boosted (^).
-    query = {
-        "size": 100,
+    
+    if len(query_data) == 0:
+      query = {
+        "size": 200,
         "query": {
-            "bool": {
-                "should": query_data
-            }
-        },
-    }
+            "match_all": {}
+        }
+      }
+    else:
+      query = {
+          "size": 200,
+          "query": {
+              "bool": {
+                  "should": query_data
+              }
+          },
+      }
 
     # Elasticsearch 6.x requires an explicit Content-Type header
     headers = {"Content-Type": "application/json"}

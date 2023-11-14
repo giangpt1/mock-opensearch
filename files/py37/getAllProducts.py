@@ -21,9 +21,10 @@ def signed_request(method, url, data=None, params=None, headers=None):
     return requests.request(method=method, url=url, headers=dict(request.headers), data=data)
     
 def lambda_handler(event, context):
+    query = {}
     query_data = []
     
-    if "queryStringParameters" in event:
+    if "queryStringParameters" in event and event["queryStringParameters"] is not None:
         if "title" in event["queryStringParameters"]:
             titleQuery = {
                 "regexp": {
@@ -77,14 +78,22 @@ def lambda_handler(event, context):
             }
             query_data.append(highPrice)
   
-    query = {
-        "size": 100,
+    if len(query_data) == 0:
+      query = {
+        "size": 200,
         "query": {
-            "bool": {
-                "should": query_data
-            }
-        },
-    }
+            "match_all": {}
+        }
+      }
+    else:
+      query = {
+          "size": 200,
+          "query": {
+              "bool": {
+                  "should": query_data
+              }
+          },
+      }
 
     headers = { "Content-Type": "application/json" }
 
