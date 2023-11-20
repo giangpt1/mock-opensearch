@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import re
 
 # pip install custom package to /tmp/ and add to path
 subprocess.call(
@@ -37,34 +38,25 @@ def lambda_handler(event, context):
     
     if "queryStringParameters" in event and event["queryStringParameters"] is not None:
         if "title" in event["queryStringParameters"]:
-            titleQuery = {
-                "regexp": {
-                    "title": {
-                        "value": ".*" + event["queryStringParameters"]["title"] + ".*",
-                        "case_insensitive": True,
-                    }
+            titleValue = event["queryStringParameters"]["title"]
+            titleAndBodyQuery = {
+                "multi_match": {
+                    "query": titleValue,
+                    "fields": [
+                        "title",
+                        "body"
+                    ]
                 }
             }
     
-            bodyQuery = {
-                "regexp": {
-                    "body": {
-                        "value": ".*" + event["queryStringParameters"]["title"] + ".*",
-                        "case_insensitive": True,
-                    }
-                }
-            }
-    
-            query_data.append(titleQuery)
-            query_data.append(bodyQuery)
+            query_data.append(titleAndBodyQuery)
     
         if "category" in event["queryStringParameters"]:
+            categoryValue = event["queryStringParameters"]["category"]
+            convertedCategoryValue = categoryValue.split(",")
             categoryQuery = {
-                "regexp": {
-                    "category": {
-                        "value": ".*" + event["queryStringParameters"]["category"] + ".*",
-                        "case_insensitive": True,
-                    }
+                "terms": {
+                    "category": convertedCategoryValue
                 }
             }
             query_data.append(categoryQuery)
@@ -88,23 +80,20 @@ def lambda_handler(event, context):
                 }
             }
             query_data.append(highPrice)
-    
-    # Put the user query into the query DSL for more accurate search results.
-    # Note that certain fields are boosted (^).
-    
+  
     if len(query_data) == 0:
       query = {
-        "size": 200,
+        "size": 1000,
         "query": {
             "match_all": {}
         }
       }
     else:
       query = {
-          "size": 200,
+          "size": 1000,
           "query": {
               "bool": {
-                  "should": query_data
+                  "must": query_data,
               }
           },
       }
