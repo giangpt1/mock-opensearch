@@ -35,6 +35,7 @@ url = host + "/" + index + "/_search"
 def lambda_handler(event, context):
     query = {}
     query_data = []
+    query_data_should = []
     
     if "queryStringParameters" in event and event["queryStringParameters"] is not None:
         if "title" in event["queryStringParameters"]:
@@ -43,13 +44,26 @@ def lambda_handler(event, context):
                 "multi_match": {
                     "query": titleValue,
                     "fields": [
-                        "title",
-                        "body"
-                    ]
+                        "title.ngram^1",
+                        "body.ngram^1"
+                    ],
+                    "type": "phrase"
+                }
+            }
+            
+            titleAndBodyQueryShould = {
+                "multi_match": {
+                    "query": titleValue,
+                    "fields": [
+                        "title^1",
+                        "body^1"
+                    ],
+                    "type": "phrase"
                 }
             }
     
             query_data.append(titleAndBodyQuery)
+            query_data_should.append(titleAndBodyQueryShould)
     
         if "category" in event["queryStringParameters"]:
             categoryValue = event["queryStringParameters"]["category"]
@@ -94,6 +108,7 @@ def lambda_handler(event, context):
           "query": {
               "bool": {
                   "must": query_data,
+                  "should": query_data_should
               }
           },
       }

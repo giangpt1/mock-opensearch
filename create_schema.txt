@@ -3,476 +3,617 @@ DELETE test-products-schema
 --------------------------------
 
 PUT test-products-schema
+
+--------------------------------
+
+POST test-products-schema/_close
+
+--------------------------------
+
+PUT test-products-schema/_settings
 {
-  "settings": {
-    "analysis": {
-      "char_filter": {
-        "normalize": {
-          "type": "icu_normalizer",
-          "name": "nfkc",
-          "mode": "compose"
-        },
-        "kana_to_romaji": {
-          "type": "mapping",
-          "mappings": [
-            "あ=>a",
-            "い=>i",
-            "う=>u",
-            "え=>e",
-            "お=>o",
-            "か=>ka",
-            "き=>ki",
-            "く=>ku",
-            "け=>ke",
-            "こ=>ko",
-            "さ=>sa",
-            "し=>shi",
-            "す=>su",
-            "せ=>se",
-            "そ=>so",
-            "た=>ta",
-            "ち=>chi",
-            "つ=>tsu",
-            "て=>te",
-            "と=>to",
-            "な=>na",
-            "に=>ni",
-            "ぬ=>nu",
-            "ね=>ne",
-            "の=>no",
-            "は=>ha",
-            "ひ=>hi",
-            "ふ=>fu",
-            "へ=>he",
-            "ほ=>ho",
-            "ま=>ma",
-            "み=>mi",
-            "む=>mu",
-            "め=>me",
-            "も=>mo",
-            "や=>ya",
-            "ゆ=>yu",
-            "よ=>yo",
-            "ら=>ra",
-            "り=>ri",
-            "る=>ru",
-            "れ=>re",
-            "ろ=>ro",
-            "わ=>wa",
-            "を=>o",
-            "ん=>n",
-            "が=>ga",
-            "ぎ=>gi",
-            "ぐ=>gu",
-            "げ=>ge",
-            "ご=>go",
-            "ざ=>za",
-            "じ=>ji",
-            "ず=>zu",
-            "ぜ=>ze",
-            "ぞ=>zo",
-            "だ=>da",
-            "ぢ=>ji",
-            "づ=>zu",
-            "で=>de",
-            "ど=>do",
-            "ば=>ba",
-            "び=>bi",
-            "ぶ=>bu",
-            "べ=>be",
-            "ぼ=>bo",
-            "ぱ=>pa",
-            "ぴ=>pi",
-            "ぷ=>pu",
-            "ぺ=>pe",
-            "ぽ=>po",
-            "きゃ=>kya",
-            "きゅ=>kyu",
-            "きょ=>kyo",
-            "しゃ=>sha",
-            "しゅ=>shu",
-            "しょ=>sho",
-            "ちゃ=>cha",
-            "ちゅ=>chu",
-            "ちょ=>cho",
-            "にゃ=>nya",
-            "にゅ=>nyu",
-            "にょ=>nyo",
-            "ひゃ=>hya",
-            "ひゅ=>hyu",
-            "ひょ=>hyo",
-            "みゃ=>mya",
-            "みゅ=>myu",
-            "みょ=>myo",
-            "りゃ=>rya",
-            "りゅ=>ryu",
-            "りょ=>ryo",
-            "ぎゃ=>gya",
-            "ぎゅ=>gyu",
-            "ぎょ=>gyo",
-            "じゃ=>ja",
-            "じゅ=>ju",
-            "じょ=>jo",
-            "びゃ=>bya",
-            "びゅ=>byu",
-            "びょ=>byo",
-            "ぴゃ=>pya",
-            "ぴゅ=>pyu",
-            "ぴょ=>pyo",
-            "ふぁ=>fa",
-            "ふぃ=>fi",
-            "ふぇ=>fe",
-            "ふぉ=>fo",
-            "ふゅ=>fyu",
-            "うぃ=>wi",
-            "うぇ=>we",
-            "うぉ=>wo",
-            "つぁ=>tsa",
-            "つぃ=>tsi",
-            "つぇ=>tse",
-            "つぉ=>tso",
-            "ちぇ=>che",
-            "しぇ=>she",
-            "じぇ=>je",
-            "てぃ=>ti",
-            "でぃ=>di",
-            "でゅ=>du",
-            "とぅ=>tu",
-            "ぢゃ=>ja",
-            "ぢゅ=>ju",
-            "ぢょ=>jo",
-            "ぁ=>a",
-            "ぃ=>i",
-            "ぅ=>u",
-            "ぇ=>e",
-            "ぉ=>o",
-            "っ=>t",
-            "ゃ=>ya",
-            "ゅ=>yu",
-            "ょ=>yo",
-            "ア=>a",
-            "イ=>i",
-            "ウ=>u",
-            "エ=>e",
-            "オ=>o",
-            "カ=>ka",
-            "キ=>ki",
-            "ク=>ku",
-            "ケ=>ke",
-            "コ=>ko",
-            "サ=>sa",
-            "シ=>shi",
-            "ス=>su",
-            "セ=>se",
-            "ソ=>so",
-            "タ=>ta",
-            "チ=>chi",
-            "ツ=>tsu",
-            "テ=>te",
-            "ト=>to",
-            "ナ=>na",
-            "ニ=>ni",
-            "ヌ=>nu",
-            "ネ=>ne",
-            "ノ=>no",
-            "ハ=>ha",
-            "ヒ=>hi",
-            "フ=>fu",
-            "ヘ=>he",
-            "ホ=>ho",
-            "マ=>ma",
-            "ミ=>mi",
-            "ム=>mu",
-            "メ=>me",
-            "モ=>mo",
-            "ヤ=>ya",
-            "ユ=>yu",
-            "ヨ=>yo",
-            "ラ=>ra",
-            "リ=>ri",
-            "ル=>ru",
-            "レ=>re",
-            "ロ=>ro",
-            "ワ=>wa",
-            "ヲ=>o",
-            "ン=>n",
-            "ガ=>ga",
-            "ギ=>gi",
-            "グ=>gu",
-            "ゲ=>ge",
-            "ゴ=>go",
-            "ザ=>za",
-            "ジ=>ji",
-            "ズ=>zu",
-            "ゼ=>ze",
-            "ゾ=>zo",
-            "ダ=>da",
-            "ヂ=>ji",
-            "ヅ=>zu",
-            "デ=>de",
-            "ド=>do",
-            "バ=>ba",
-            "ビ=>bi",
-            "ブ=>bu",
-            "ベ=>be",
-            "ボ=>bo",
-            "パ=>pa",
-            "ピ=>pi",
-            "プ=>pu",
-            "ペ=>pe",
-            "ポ=>po",
-            "キャ=>kya",
-            "キュ=>kyu",
-            "キョ=>kyo",
-            "シャ=>sha",
-            "シュ=>shu",
-            "ショ=>sho",
-            "チャ=>cha",
-            "チュ=>chu",
-            "チョ=>cho",
-            "ニャ=>nya",
-            "ニュ=>nyu",
-            "ニョ=>nyo",
-            "ヒャ=>hya",
-            "ヒュ=>hyu",
-            "ヒョ=>hyo",
-            "ミャ=>mya",
-            "ミュ=>myu",
-            "ミョ=>myo",
-            "リャ=>rya",
-            "リュ=>ryu",
-            "リョ=>ryo",
-            "ギャ=>gya",
-            "ギュ=>gyu",
-            "ギョ=>gyo",
-            "ジャ=>ja",
-            "ジュ=>ju",
-            "ジョ=>jo",
-            "ビャ=>bya",
-            "ビュ=>byu",
-            "ビョ=>byo",
-            "ピャ=>pya",
-            "ピュ=>pyu",
-            "ピョ=>pyo",
-            "ファ=>fa",
-            "フィ=>fi",
-            "フェ=>fe",
-            "フォ=>fo",
-            "フュ=>fyu",
-            "ウィ=>wi",
-            "ウェ=>we",
-            "ウォ=>wo",
-            "ヴァ=>va",
-            "ヴィ=>vi",
-            "ヴ=>v",
-            "ヴェ=>ve",
-            "ヴォ=>vo",
-            "ツァ=>tsa",
-            "ツィ=>tsi",
-            "ツェ=>tse",
-            "ツォ=>tso",
-            "チェ=>che",
-            "シェ=>she",
-            "ジェ=>je",
-            "ティ=>ti",
-            "ディ=>di",
-            "デュ=>du",
-            "トゥ=>tu",
-            "ヂャ=>ja",
-            "ヂュ=>ju",
-            "ヂョ=>jo",
-            "ァ=>a",
-            "ィ=>i",
-            "ゥ=>u",
-            "ェ=>e",
-            "ォ=>o",
-            "ッ=>t",
-            "ャ=>ya",
-            "ュ=>yu",
-            "ョ=>yo"
-          ]
-        }
+  "analysis": {
+    "char_filter": {
+      "normalize": {
+        "type": "icu_normalizer",
+        "name": "nfkc",
+        "mode": "compose"
       },
-      "tokenizer": {
-        "kuromoji_normal": {
-          "mode": "normal",
-          "type": "kuromoji_tokenizer"
-        }
-      },
-      "filter": {
-        "readingform": {
-          "type": "kuromoji_readingform",
-          "use_romaji": true
-        },
-        "edge_ngram": {
-          "type": "edge_ngram",
-          "min_gram": 1,
-          "max_gram": 10
-        },
-        "synonym": {
-          "type": "synonym",
-          "lenient": true,
-          "synonyms": [
-            "nippon, nihon"
-          ]
-        }
-      },
-      "analyzer": {
-        "suggest_index_analyzer": {
-          "type": "custom",
-          "char_filter": [
-            "normalize"
-          ],
-          "tokenizer": "kuromoji_normal",
-          "filter": [
-            "lowercase",
-            "edge_ngram"
-          ]
-        },
-        "suggest_search_analyzer": {
-          "type": "custom",
-          "char_filter": [
-            "normalize"
-          ],
-          "tokenizer": "kuromoji_normal",
-          "filter": [
-            "lowercase"
-          ]
-        },
-        "readingform_index_analyzer": {
-          "type": "custom",
-          "char_filter": [
-            "normalize",
-            "kana_to_romaji"
-          ],
-          "tokenizer": "kuromoji_normal",
-          "filter": [
-            "lowercase",
-            "readingform",
-            "asciifolding",
-            "synonym",
-            "edge_ngram"
-          ]
-        },
-        "readingform_search_analyzer": {
-          "type": "custom",
-          "char_filter": [
-            "normalize",
-            "kana_to_romaji"
-          ],
-          "tokenizer": "kuromoji_normal",
-          "filter": [
-            "lowercase",
-            "readingform",
-            "asciifolding",
-            "synonym"
-          ]
-        }
+      "kana_to_romaji": {
+        "type": "mapping",
+        "mappings": [
+          "あ=>a",
+          "い=>i",
+          "う=>u",
+          "え=>e",
+          "お=>o",
+          "か=>ka",
+          "き=>ki",
+          "く=>ku",
+          "け=>ke",
+          "こ=>ko",
+          "さ=>sa",
+          "し=>shi",
+          "す=>su",
+          "せ=>se",
+          "そ=>so",
+          "た=>ta",
+          "ち=>chi",
+          "つ=>tsu",
+          "て=>te",
+          "と=>to",
+          "な=>na",
+          "に=>ni",
+          "ぬ=>nu",
+          "ね=>ne",
+          "の=>no",
+          "は=>ha",
+          "ひ=>hi",
+          "ふ=>fu",
+          "へ=>he",
+          "ほ=>ho",
+          "ま=>ma",
+          "み=>mi",
+          "む=>mu",
+          "め=>me",
+          "も=>mo",
+          "や=>ya",
+          "ゆ=>yu",
+          "よ=>yo",
+          "ら=>ra",
+          "り=>ri",
+          "る=>ru",
+          "れ=>re",
+          "ろ=>ro",
+          "わ=>wa",
+          "を=>o",
+          "ん=>n",
+          "が=>ga",
+          "ぎ=>gi",
+          "ぐ=>gu",
+          "げ=>ge",
+          "ご=>go",
+          "ざ=>za",
+          "じ=>ji",
+          "ず=>zu",
+          "ぜ=>ze",
+          "ぞ=>zo",
+          "だ=>da",
+          "ぢ=>ji",
+          "づ=>zu",
+          "で=>de",
+          "ど=>do",
+          "ば=>ba",
+          "び=>bi",
+          "ぶ=>bu",
+          "べ=>be",
+          "ぼ=>bo",
+          "ぱ=>pa",
+          "ぴ=>pi",
+          "ぷ=>pu",
+          "ぺ=>pe",
+          "ぽ=>po",
+          "きゃ=>kya",
+          "きゅ=>kyu",
+          "きょ=>kyo",
+          "しゃ=>sha",
+          "しゅ=>shu",
+          "しょ=>sho",
+          "ちゃ=>cha",
+          "ちゅ=>chu",
+          "ちょ=>cho",
+          "にゃ=>nya",
+          "にゅ=>nyu",
+          "にょ=>nyo",
+          "ひゃ=>hya",
+          "ひゅ=>hyu",
+          "ひょ=>hyo",
+          "みゃ=>mya",
+          "みゅ=>myu",
+          "みょ=>myo",
+          "りゃ=>rya",
+          "りゅ=>ryu",
+          "りょ=>ryo",
+          "ぎゃ=>gya",
+          "ぎゅ=>gyu",
+          "ぎょ=>gyo",
+          "じゃ=>ja",
+          "じゅ=>ju",
+          "じょ=>jo",
+          "びゃ=>bya",
+          "びゅ=>byu",
+          "びょ=>byo",
+          "ぴゃ=>pya",
+          "ぴゅ=>pyu",
+          "ぴょ=>pyo",
+          "ふぁ=>fa",
+          "ふぃ=>fi",
+          "ふぇ=>fe",
+          "ふぉ=>fo",
+          "ふゅ=>fyu",
+          "うぃ=>wi",
+          "うぇ=>we",
+          "うぉ=>wo",
+          "つぁ=>tsa",
+          "つぃ=>tsi",
+          "つぇ=>tse",
+          "つぉ=>tso",
+          "ちぇ=>che",
+          "しぇ=>she",
+          "じぇ=>je",
+          "てぃ=>ti",
+          "でぃ=>di",
+          "でゅ=>du",
+          "とぅ=>tu",
+          "ぢゃ=>ja",
+          "ぢゅ=>ju",
+          "ぢょ=>jo",
+          "ぁ=>a",
+          "ぃ=>i",
+          "ぅ=>u",
+          "ぇ=>e",
+          "ぉ=>o",
+          "っ=>t",
+          "ゃ=>ya",
+          "ゅ=>yu",
+          "ょ=>yo",
+          "ア=>a",
+          "イ=>i",
+          "ウ=>u",
+          "エ=>e",
+          "オ=>o",
+          "カ=>ka",
+          "キ=>ki",
+          "ク=>ku",
+          "ケ=>ke",
+          "コ=>ko",
+          "サ=>sa",
+          "シ=>shi",
+          "ス=>su",
+          "セ=>se",
+          "ソ=>so",
+          "タ=>ta",
+          "チ=>chi",
+          "ツ=>tsu",
+          "テ=>te",
+          "ト=>to",
+          "ナ=>na",
+          "ニ=>ni",
+          "ヌ=>nu",
+          "ネ=>ne",
+          "ノ=>no",
+          "ハ=>ha",
+          "ヒ=>hi",
+          "フ=>fu",
+          "ヘ=>he",
+          "ホ=>ho",
+          "マ=>ma",
+          "ミ=>mi",
+          "ム=>mu",
+          "メ=>me",
+          "モ=>mo",
+          "ヤ=>ya",
+          "ユ=>yu",
+          "ヨ=>yo",
+          "ラ=>ra",
+          "リ=>ri",
+          "ル=>ru",
+          "レ=>re",
+          "ロ=>ro",
+          "ワ=>wa",
+          "ヲ=>o",
+          "ン=>n",
+          "ガ=>ga",
+          "ギ=>gi",
+          "グ=>gu",
+          "ゲ=>ge",
+          "ゴ=>go",
+          "ザ=>za",
+          "ジ=>ji",
+          "ズ=>zu",
+          "ゼ=>ze",
+          "ゾ=>zo",
+          "ダ=>da",
+          "ヂ=>ji",
+          "ヅ=>zu",
+          "デ=>de",
+          "ド=>do",
+          "バ=>ba",
+          "ビ=>bi",
+          "ブ=>bu",
+          "ベ=>be",
+          "ボ=>bo",
+          "パ=>pa",
+          "ピ=>pi",
+          "プ=>pu",
+          "ペ=>pe",
+          "ポ=>po",
+          "キャ=>kya",
+          "キュ=>kyu",
+          "キョ=>kyo",
+          "シャ=>sha",
+          "シュ=>shu",
+          "ショ=>sho",
+          "チャ=>cha",
+          "チュ=>chu",
+          "チョ=>cho",
+          "ニャ=>nya",
+          "ニュ=>nyu",
+          "ニョ=>nyo",
+          "ヒャ=>hya",
+          "ヒュ=>hyu",
+          "ヒョ=>hyo",
+          "ミャ=>mya",
+          "ミュ=>myu",
+          "ミョ=>myo",
+          "リャ=>rya",
+          "リュ=>ryu",
+          "リョ=>ryo",
+          "ギャ=>gya",
+          "ギュ=>gyu",
+          "ギョ=>gyo",
+          "ジャ=>ja",
+          "ジュ=>ju",
+          "ジョ=>jo",
+          "ビャ=>bya",
+          "ビュ=>byu",
+          "ビョ=>byo",
+          "ピャ=>pya",
+          "ピュ=>pyu",
+          "ピョ=>pyo",
+          "ファ=>fa",
+          "フィ=>fi",
+          "フェ=>fe",
+          "フォ=>fo",
+          "フュ=>fyu",
+          "ウィ=>wi",
+          "ウェ=>we",
+          "ウォ=>wo",
+          "ヴァ=>va",
+          "ヴィ=>vi",
+          "ヴ=>v",
+          "ヴェ=>ve",
+          "ヴォ=>vo",
+          "ツァ=>tsa",
+          "ツィ=>tsi",
+          "ツェ=>tse",
+          "ツォ=>tso",
+          "チェ=>che",
+          "シェ=>she",
+          "ジェ=>je",
+          "ティ=>ti",
+          "ディ=>di",
+          "デュ=>du",
+          "トゥ=>tu",
+          "ヂャ=>ja",
+          "ヂュ=>ju",
+          "ヂョ=>jo",
+          "ァ=>a",
+          "ィ=>i",
+          "ゥ=>u",
+          "ェ=>e",
+          "ォ=>o",
+          "ッ=>t",
+          "ャ=>ya",
+          "ュ=>yu",
+          "ョ=>yo"
+        ]
       }
     },
-    "index": {
-      "number_of_shards": 5
-    }
-  },
-  "mappings": {
-    "properties": {
-      "title": {
-        "type": "keyword",
-        "fields": {
-          "suggest": {
-            "type": "text",
-            "search_analyzer": "suggest_search_analyzer",
-            "analyzer": "suggest_index_analyzer"
-          },
-          "readingform": {
-            "type": "text",
-            "search_analyzer": "readingform_search_analyzer",
-            "analyzer": "readingform_index_analyzer"
-          }
-        }
+    "tokenizer": {
+      "kuromoji_normal": {
+        "mode": "normal",
+        "type": "kuromoji_tokenizer"
+      }
+    },
+    "filter": {
+      "readingform": {
+        "type": "kuromoji_readingform",
+        "use_romaji": true
       },
-      "category": {
-        "type": "keyword",
-        "fields": {
-          "suggest": {
-            "type": "text",
-            "search_analyzer": "suggest_search_analyzer",
-            "analyzer": "suggest_index_analyzer"
-          },
-          "readingform": {
-            "type": "text",
-            "search_analyzer": "readingform_search_analyzer",
-            "analyzer": "readingform_index_analyzer"
-          }
-        }
+      "edge_ngram": {
+        "type": "edge_ngram",
+        "min_gram": 1,
+        "max_gram": 10
+      },
+      "synonym": {
+        "type": "synonym",
+        "lenient": true,
+        "synonyms": [
+          "nippon, nihon"
+        ]
+      }
+    },
+    "analyzer": {
+      "suggest_index_analyzer": {
+        "type": "custom",
+        "char_filter": [
+          "normalize"
+        ],
+        "tokenizer": "kuromoji_normal",
+        "filter": [
+          "lowercase",
+          "edge_ngram"
+        ]
+      },
+      "suggest_search_analyzer": {
+        "type": "custom",
+        "char_filter": [
+          "normalize"
+        ],
+        "tokenizer": "kuromoji_normal",
+        "filter": [
+          "lowercase"
+        ]
+      },
+      "readingform_index_analyzer": {
+        "type": "custom",
+        "char_filter": [
+          "normalize",
+          "kana_to_romaji"
+        ],
+        "tokenizer": "kuromoji_normal",
+        "filter": [
+          "lowercase",
+          "readingform",
+          "asciifolding",
+          "synonym",
+          "edge_ngram"
+        ]
+      },
+      "readingform_search_analyzer": {
+        "type": "custom",
+        "char_filter": [
+          "normalize",
+          "kana_to_romaji"
+        ],
+        "tokenizer": "kuromoji_normal",
+        "filter": [
+          "lowercase",
+          "readingform",
+          "asciifolding",
+          "synonym"
+        ]
       }
     }
   }
 }
 
--------------------------------------------------------------
+--------------------------------
+
+PUT test-products-schema/_settings
+{ 
+  "settings": { 
+    "analysis": { 
+      "char_filter": { 
+        "normalize": { 
+          "type": "icu_normalizer", 
+          "name": "nfkc", 
+          "mode": "compose" 
+        } 
+      }, 
+      "tokenizer": { 
+        "ja_kuromoji_tokenizer": { 
+          "mode": "search", 
+          "type": "kuromoji_tokenizer", 
+          "discard_compound_token": true, 
+          "user_dictionary_rules": [ 
+            "東京スカイツリー,東京 スカイツリー,トウキョウ スカイツリー,カスタム名詞" 
+          ] 
+        }, 
+        "ja_ngram_tokenizer": { 
+          "type": "ngram", 
+          "min_gram": 2, 
+          "max_gram": 2, 
+          "token_chars": [ 
+            "letter", 
+            "digit" 
+          ] 
+        } 
+      }, 
+      "filter": { 
+        "ja_index_synonym": { 
+          "type": "synonym", 
+          "lenient": false, 
+          "synonyms": [ 
+          ] 
+        }, 
+        "ja_search_synonym": { 
+          "type": "synonym_graph", 
+          "lenient": false, 
+          "synonyms": [ 
+            "米国, アメリカ", 
+            "東京大学, 東大" 
+          ] 
+        } 
+      }, 
+      "analyzer": { 
+        "ja_kuromoji_index_analyzer": { 
+          "type": "custom", 
+          "char_filter": [ 
+            "normalize" 
+          ], 
+          "tokenizer": "ja_kuromoji_tokenizer", 
+          "filter": [ 
+            "kuromoji_baseform", 
+            "kuromoji_part_of_speech", 
+            "ja_index_synonym", 
+            "cjk_width", 
+            "ja_stop", 
+            "kuromoji_stemmer", 
+            "lowercase" 
+          ] 
+        }, 
+        "ja_kuromoji_search_analyzer": { 
+          "type": "custom", 
+          "char_filter": [ 
+            "normalize" 
+          ], 
+          "tokenizer": "ja_kuromoji_tokenizer", 
+          "filter": [ 
+            "kuromoji_baseform", 
+            "kuromoji_part_of_speech", 
+            "ja_search_synonym", 
+            "cjk_width", 
+            "ja_stop", 
+            "kuromoji_stemmer", 
+            "lowercase" 
+          ] 
+        }, 
+        "ja_ngram_index_analyzer": { 
+          "type": "custom", 
+          "char_filter": [ 
+            "normalize" 
+          ], 
+          "tokenizer": "ja_ngram_tokenizer", 
+          "filter": [ 
+            "lowercase" 
+          ] 
+        }, 
+        "ja_ngram_search_analyzer": { 
+          "type": "custom", 
+          "char_filter": [ 
+            "normalize" 
+          ], 
+          "tokenizer": "ja_ngram_tokenizer", 
+          "filter": [ 
+            "ja_search_synonym", 
+            "lowercase" 
+          ] 
+        } 
+      } 
+    } 
+  }
+}
+
+--------------------------------
+
+PUT test-products-schema/_mapping
+{
+  "properties": {
+    "title": {
+      "type": "keyword",
+      "fields": {
+        "suggest": {
+          "type": "text",
+          "search_analyzer": "suggest_search_analyzer",
+          "analyzer": "suggest_index_analyzer"
+        },
+        "readingform": {
+          "type": "text",
+          "search_analyzer": "readingform_search_analyzer",
+          "analyzer": "readingform_index_analyzer"
+        },
+        "ngram": { 
+          "type": "text", 
+          "search_analyzer": "ja_ngram_search_analyzer", 
+          "analyzer": "ja_ngram_index_analyzer" 
+        } 
+      }
+    },
+    "category": {
+      "type": "keyword",
+      "fields": {
+        "suggest": {
+          "type": "text",
+          "search_analyzer": "suggest_search_analyzer",
+          "analyzer": "suggest_index_analyzer"
+        },
+        "readingform": {
+          "type": "text",
+          "search_analyzer": "readingform_search_analyzer",
+          "analyzer": "readingform_index_analyzer"
+        },
+        "ngram": { 
+          "type": "text", 
+          "search_analyzer": "ja_ngram_search_analyzer", 
+          "analyzer": "ja_ngram_index_analyzer" 
+        } 
+      }
+    },
+    "body": {
+      "type": "text", 
+      "search_analyzer": "ja_kuromoji_search_analyzer", 
+      "analyzer": "ja_kuromoji_index_analyzer", 
+      "fields": { 
+        "ngram": { 
+          "type": "text", 
+          "search_analyzer": "ja_ngram_search_analyzer", 
+          "analyzer": "ja_ngram_index_analyzer" 
+        } 
+      } 
+    } 
+  }
+}
+
+----------------------------------
+
+POST test-products-schema/_open
+
+----------------------------------
+
 
 POST _bulk
 {"index":{"_index":"test-products-schema","_id":"tt928608946202"}}
-{"id":"id928608946202","collection_id":"collect801544455200","recommendation_id":"rec170131393407","title":"Ocean Blue Shirt","handle":"ocean-blue-shirt","category":"Clothing","body":"Ocean blue cotton shirt with a narrow collar and buttons down the front and long sleeves. Comfortable fit and tiled kalidoscope patterns. ","image_url":"https://burst.shopifycdn.com/photos/young-man-in-bright-fashion_925x.jpg","min_price":79717,"max_price":66414,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id928608946202","collection_id":"collect801544455200","recommendation_id":"rec170131393407","title":"Ocean Blue Shirt","handle":"ocean-blue-shirt","category":"Clothing","body":"Ocean blue cotton shirt with a narrow collar and buttons down the front and long sleeves. Comfortable fit and tiled kalidoscope patterns. ","image_url":"https://burst.shopifycdn.com/photos/young-man-in-bright-fashion_925x.jpg","min_price":39717,"max_price":66414,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt637677793753"}}
-{"id":"id637677793753","collection_id":"collect143347644886","recommendation_id":"rec993150987507","title":"Classic Varsity Top","handle":"classic-varsity-top","category":"Clothing","body":"Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter. ","image_url":"https://burst.shopifycdn.com/photos/casual-fashion-woman_925x.jpg","min_price":76711,"max_price":23193,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id637677793753","collection_id":"collect143347644886","recommendation_id":"rec993150987507","title":"Classic Varsity Top","handle":"classic-varsity-top","category":"Clothing","body":"Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter. ","image_url":"https://burst.shopifycdn.com/photos/casual-fashion-woman_925x.jpg","min_price":16711,"max_price":23193,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt464557517532"}}
 {"id":"id464557517532","collection_id":"collect885119919055","recommendation_id":"rec182409636450","title":"Classic Varsity Top","handle":"classic-varsity-top","category":"Clothing","body":"Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter. ","image_url":"https://burst.shopifycdn.com/photos/casual-fashion-woman_925x.jpg","min_price":12764,"max_price":79518,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt273836862473"}}
-{"id":"id273836862473","collection_id":"collect622804702959","recommendation_id":"rec434769505541","title":"Classic Varsity Top","handle":"classic-varsity-top","category":"Clothing","body":"Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter. ","image_url":"https://burst.shopifycdn.com/photos/casual-fashion-woman_925x.jpg","min_price":30031,"max_price":4475,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id273836862473","collection_id":"collect622804702959","recommendation_id":"rec434769505541","title":"Classic Varsity Top","handle":"classic-varsity-top","category":"Clothing","body":"Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter. ","image_url":"https://burst.shopifycdn.com/photos/casual-fashion-woman_925x.jpg","min_price":30031,"max_price":44475,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt544494603976"}}
 {"id":"id544494603976","collection_id":"collect637699472614","recommendation_id":"rec870951745459","title":"Yellow Wool Jumper","handle":"yellow-wool-jumper","category":"Clothing","body":"Knitted jumper in a soft wool blend with low dropped shoulders and wide sleeves and think cuffs. Perfect for keeping warm during Fall. ","image_url":"https://burst.shopifycdn.com/photos/autumn-photographer-taking-picture_925x.jpg","min_price":5990,"max_price":77141,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt827559723718"}}
-{"id":"id827559723718","collection_id":"collect918828328166","recommendation_id":"rec791240537889","title":"Floral White Top","handle":"floral-white-top","category":"Clothing","body":"Stylish sleeveless white top with a floral pattern. ","image_url":"https://burst.shopifycdn.com/photos/city-woman-fashion_925x@2x.jpg","min_price":64928,"max_price":38064,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id827559723718","collection_id":"collect918828328166","recommendation_id":"rec791240537889","title":"Floral White Top","handle":"floral-white-top","category":"Clothing","body":"Stylish sleeveless white top with a floral pattern. ","image_url":"https://burst.shopifycdn.com/photos/city-woman-fashion_925x@2x.jpg","min_price":24928,"max_price":38064,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt665857655640"}}
-{"id":"id665857655640","collection_id":"collect410198304874","recommendation_id":"rec292131184821","title":"Striped Silk Blouse","handle":"striped-silk-blouse","category":"Clothing","body":"Ultra-stylish black and red striped silk blouse with buckle collar and matching button pants. ","image_url":"https://burst.shopifycdn.com/photos/striped-blouse-fashion_925x.jpg","min_price":96223,"max_price":58556,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id665857655640","collection_id":"collect410198304874","recommendation_id":"rec292131184821","title":"Striped Silk Blouse","handle":"striped-silk-blouse","category":"Clothing","body":"Ultra-stylish black and red striped silk blouse with buckle collar and matching button pants. ","image_url":"https://burst.shopifycdn.com/photos/striped-blouse-fashion_925x.jpg","min_price":16223,"max_price":58556,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt370460460917"}}
 {"id":"id370460460917","collection_id":"collect610643150838","recommendation_id":"rec961345872529","title":"Classic Leather Jacket","handle":"classic-leather-jacket","category":"Clothing","body":"Womans zipped leather jacket. Adjustable belt for a comfortable fit, complete with shoulder pads and front zip pocket. ","image_url":"https://burst.shopifycdn.com/photos/leather-jacket-and-tea_925x.jpg","min_price":49389,"max_price":95014,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt970753632502"}}
-{"id":"id970753632502","collection_id":"collect560038519933","recommendation_id":"rec991305766100","title":"Dark Denim Top","handle":"dark-denim-top","category":"Clothing","body":"Classic dark denim top with chest pockets, long sleeves with buttoned cuffs, and a ripped hem effect.","image_url":"https://burst.shopifycdn.com/photos/young-female-models-denim_925x.jpg","min_price":63885,"max_price":12885,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id970753632502","collection_id":"collect560038519933","recommendation_id":"rec991305766100","title":"Dark Denim Top","handle":"dark-denim-top","category":"Clothing","body":"Classic dark denim top with chest pockets, long sleeves with buttoned cuffs, and a ripped hem effect.","image_url":"https://burst.shopifycdn.com/photos/young-female-models-denim_925x.jpg","min_price":33885,"max_price":42885,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt866348391775"}}
-{"id":"id866348391775","collection_id":"collect603884146130","recommendation_id":"rec573451958015","title":"Navy Sports Jacket","handle":"navy-sport-jacket","category":"Clothing","body":"Long-sleeved navy waterproof jacket in thin, polyester fabric with a soft mesh inside. The durable water-repellent finish means you'll be kept comfortable and protected when out in all weathers.","image_url":"https://burst.shopifycdn.com/photos/mens-fall-fashion-jacket_925x.jpg","min_price":73082,"max_price":92445,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id866348391775","collection_id":"collect603884146130","recommendation_id":"rec573451958015","title":"Navy Sports Jacket","handle":"navy-sport-jacket","category":"Clothing","body":"Long-sleeved navy waterproof jacket in thin, polyester fabric with a soft mesh inside. The durable water-repellent finish means you'll be kept comfortable and protected when out in all weathers.","image_url":"https://burst.shopifycdn.com/photos/mens-fall-fashion-jacket_925x.jpg","min_price":23082,"max_price":92445,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt501212973098"}}
-{"id":"id501212973098","collection_id":"collect801544455200","recommendation_id":"rec559035747476","title":"Soft Winter Jacket","handle":"dark-winter-jacket","category":"Clothing","body":"Thick black winter jacket, with soft fleece lining. Perfect for those cold weather days.","image_url":"https://burst.shopifycdn.com/photos/smiling-woman-on-snowy-afternoon_925x.jpg","min_price":81938,"max_price":58862,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id501212973098","collection_id":"collect801544455200","recommendation_id":"rec559035747476","title":"Soft Winter Jacket","handle":"dark-winter-jacket","category":"Clothing","body":"Thick black winter jacket, with soft fleece lining. Perfect for those cold weather days.","image_url":"https://burst.shopifycdn.com/photos/smiling-woman-on-snowy-afternoon_925x.jpg","min_price":21938,"max_price":58862,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt466494419044"}}
-{"id":"id466494419044","collection_id":"collect143347644886","recommendation_id":"rec928931657035","title":"Black Leather Bag","handle":"black-leather-bag","category":"Clothing","body":"Womens black leather bag, with ample space. Can be worn over the shoulder, or remove straps to carry in your hand. ","image_url":"https://burst.shopifycdn.com/photos/black-bag-over-the-shoulder_925x.jpg","min_price":60921,"max_price":19309,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id466494419044","collection_id":"collect143347644886","recommendation_id":"rec928931657035","title":"Black Leather Bag","handle":"black-leather-bag","category":"Clothing","body":"Womens black leather bag, with ample space. Can be worn over the shoulder, or remove straps to carry in your hand. ","image_url":"https://burst.shopifycdn.com/photos/black-bag-over-the-shoulder_925x.jpg","min_price":7921,"max_price":19309,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt858150047397"}}
 {"id":"id858150047397","collection_id":"collect885119919055","recommendation_id":"rec413153919923","title":"Zipped Jacket","handle":"zipped-jacket","category":"Clothing","body":"Dark navy and light blue men's zipped waterproof jacket with an outer zipped chestpocket for easy storeage.","image_url":"https://burst.shopifycdn.com/photos/menswear-blue-zip-up-jacket_925x.jpg","min_price":20367,"max_price":81648,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt119724372585"}}
-{"id":"id119724372585","collection_id":"collect622804702959","recommendation_id":"rec330605475547","title":"Silk Summer Top","handle":"silk-summer-top","category":"Clothing","body":"Silk womens top with short sleeves and number pattern.","image_url":"https://burst.shopifycdn.com/photos/young-hip-woman-at-carnival_925x.jpg","min_price":69254,"max_price":71792,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id119724372585","collection_id":"collect622804702959","recommendation_id":"rec330605475547","title":"Silk Summer Top","handle":"silk-summer-top","category":"Clothing","body":"Silk womens top with short sleeves and number pattern.","image_url":"https://burst.shopifycdn.com/photos/young-hip-woman-at-carnival_925x.jpg","min_price":49254,"max_price":71792,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt466515218251"}}
-{"id":"id466515218251","collection_id":"collect637699472614","recommendation_id":"rec596354171771","title":"Long Sleeve Cotton Top","handle":"longsleeve-cotton-top","category":"Clothing","body":"Black cotton womens top, with long sleeves, no collar and a thick hem. ","image_url":"https://burst.shopifycdn.com/photos/woman-outside-brownstone_925x.jpg","min_price":14088,"max_price":15706,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id466515218251","collection_id":"collect637699472614","recommendation_id":"rec596354171771","title":"Long Sleeve Cotton Top","handle":"longsleeve-cotton-top","category":"Clothing","body":"Black cotton womens top, with long sleeves, no collar and a thick hem. ","image_url":"https://burst.shopifycdn.com/photos/woman-outside-brownstone_925x.jpg","min_price":12088,"max_price":15706,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt898130586753"}}
-{"id":"id898130586753","collection_id":"collect918828328166","recommendation_id":"rec961273440143","title":"Chequered Red Shirt","handle":"chequered-red-shirt","category":"Clothing","body":"Classic mens plaid flannel shirt with long sleeves, in chequered style, with two chest pockets.","image_url":"https://burst.shopifycdn.com/photos/red-plaid-shirt_925x.jpg","min_price":43968,"max_price":3145,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id898130586753","collection_id":"collect918828328166","recommendation_id":"rec961273440143","title":"Chequered Red Shirt","handle":"chequered-red-shirt","category":"Clothing","body":"Classic mens plaid flannel shirt with long sleeves, in chequered style, with two chest pockets.","image_url":"https://burst.shopifycdn.com/photos/red-plaid-shirt_925x.jpg","min_price":23968,"max_price":53145,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt676965309672"}}
-{"id":"id676965309672","collection_id":"collect410198304874","recommendation_id":"rec455027569081","title":"White Cotton Shirt","handle":"white-cotton-shirt","category":"Clothing","body":"Plain white cotton long sleeved shirt with loose collar. Small buttons and front pocket. ","image_url":"https://burst.shopifycdn.com/photos/smiling-woman-poses_925x.jpg","min_price":65907,"max_price":77231,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id676965309672","collection_id":"collect410198304874","recommendation_id":"rec455027569081","title":"White Cotton Shirt","handle":"white-cotton-shirt","category":"Clothing","body":"Plain white cotton long sleeved shirt with loose collar. Small buttons and front pocket. ","image_url":"https://burst.shopifycdn.com/photos/smiling-woman-poses_925x.jpg","min_price":35907,"max_price":77231,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt869295745861"}}
 {"id":"id869295745861","collection_id":"collect610643150838","recommendation_id":"rec512937364641","title":"Olive Green Jacket","handle":"olive-green-jacket","category":"Clothing","body":"Loose fitting olive green jacket with buttons and large pockets. Multicoloured pattern on the front of the shoulders.","image_url":"https://burst.shopifycdn.com/photos/urban-fashion_925x.jpg","min_price":19159,"max_price":62891,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt514231723526"}}
-{"id":"id514231723526","collection_id":"collect560038519933","recommendation_id":"rec627102421658","title":"Blue Silk Tuxedo","handle":"blue-silk-tuxedo","category":"Clothing","body":"Blue silk tuxedo with marbled aquatic pattern and dark lining. Sleeves are complete with rounded hem and black buttons.","image_url":"https://burst.shopifycdn.com/photos/man-adjusts-blue-tuxedo-bowtie_925x.jpg","min_price":77975,"max_price":85390,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id514231723526","collection_id":"collect560038519933","recommendation_id":"rec627102421658","title":"Blue Silk Tuxedo","handle":"blue-silk-tuxedo","category":"Clothing","body":"Blue silk tuxedo with marbled aquatic pattern and dark lining. Sleeves are complete with rounded hem and black buttons.","image_url":"https://burst.shopifycdn.com/photos/man-adjusts-blue-tuxedo-bowtie_925x.jpg","min_price":67975,"max_price":85390,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt977306920612"}}
 {"id":"id977306920612","collection_id":"collect603884146130","recommendation_id":"rec251615806920","title":"Red Sports Tee","handle":"red-sports-tee","category":"Clothing","body":"Women's red sporty t-shirt with colorful details on the sleeves and a small white pocket.","image_url":"https://burst.shopifycdn.com/photos/womens-red-t-shirt_925x.jpg","min_price":28393,"max_price":51729,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt739197979481"}}
-{"id":"id739197979481","collection_id":"collect801544455200","recommendation_id":"rec679478804104","title":"Striped Skirt and Top","handle":"striped-skirt-and-top","category":"Clothing","body":"Black cotton top with matching striped skirt. ","image_url":"https://burst.shopifycdn.com/photos/woman-in-the-city_925x.jpg","min_price":47556,"max_price":58814,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id739197979481","collection_id":"collect801544455200","recommendation_id":"rec679478804104","title":"Striped Skirt and Top","handle":"striped-skirt-and-top","category":"Clothing","body":"Black cotton top with matching striped skirt. ","image_url":"https://burst.shopifycdn.com/photos/woman-in-the-city_925x.jpg","min_price":37556,"max_price":58814,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt752235044566"}}
-{"id":"id752235044566","collection_id":"collect143347644886","recommendation_id":"rec938543433483","title":"LED High Tops","handle":"led-high-tops","category":"Clothing","body":"Black high top shoes with green LED lights in the sole, tied up with laces and a buckle. ","image_url":"https://burst.shopifycdn.com/photos/putting-on-your-shoes_925x.jpg","min_price":98740,"max_price":32730,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id752235044566","collection_id":"collect143347644886","recommendation_id":"rec938543433483","title":"LED High Tops","handle":"led-high-tops","category":"Clothing","body":"Black high top shoes with green LED lights in the sole, tied up with laces and a buckle. ","image_url":"https://burst.shopifycdn.com/photos/putting-on-your-shoes_925x.jpg","min_price":8740,"max_price":32730,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt457695404563"}}
-{"id":"id457695404563","collection_id":"collect801544455200","recommendation_id":"rec615759074521","title":"Clay Plant Pot","handle":"clay-plant-pot","category":"Home and Garden","body":"<p>Classic blown clay pot for plants</p>","image_url":"https://burst.shopifycdn.com/photos/pot-with-a-single-sprout_925x.jpg","min_price":23018,"max_price":29678,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Pot,Plants"}
+{"id":"id457695404563","collection_id":"collect801544455200","recommendation_id":"rec615759074521","title":"Clay Plant Pot","handle":"clay-plant-pot","category":"Home and Garden","body":"<p>Classic blown clay pot for plants</p>","image_url":"https://burst.shopifycdn.com/photos/pot-with-a-single-sprout_925x.jpg","min_price":20018,"max_price":29678,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Pot,Plants"}
 {"index":{"_index":"test-products-schema","_id":"tt296089512767"}}
-{"id":"id296089512767","collection_id":"collect143347644886","recommendation_id":"rec978239475082","title":"Clay Plant Pot","handle":"clay-plant-pot","category":"Home and Garden","body":"","image_url":"https://burst.shopifycdn.com/photos/pot-with-a-single-sprout_925x.jpg","min_price":1748,"max_price":38997,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id296089512767","collection_id":"collect143347644886","recommendation_id":"rec978239475082","title":"Clay Plant Pot","handle":"clay-plant-pot","category":"Home and Garden","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/pot-with-a-single-sprout_925x.jpg","min_price":11748,"max_price":38997,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt322128925098"}}
-{"id":"id322128925098","collection_id":"collect885119919055","recommendation_id":"rec608295612007","title":"Copper Light","handle":"copper-light","category":"Home and Garden","body":"<p>Stylish copper bedside light</p>","image_url":"https://burst.shopifycdn.com/photos/copper-light-in-bedroom_925x.jpg","min_price":36188,"max_price":1070,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Copper,Bedroom"}
+{"id":"id322128925098","collection_id":"collect885119919055","recommendation_id":"rec608295612007","title":"Copper Light","handle":"copper-light","category":"Home and Garden","body":"<p>Stylish copper bedside light</p>","image_url":"https://burst.shopifycdn.com/photos/copper-light-in-bedroom_925x.jpg","min_price":16188,"max_price":41070,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Copper,Bedroom"}
 {"index":{"_index":"test-products-schema","_id":"tt567075296154"}}
-{"id":"id567075296154","collection_id":"collect622804702959","recommendation_id":"rec658822545592","title":"Cream Sofa","handle":"cream-sofa","category":"Home and Garden","body":"<p>Comfortable cream sofa with wooden base</p>","image_url":"https://burst.shopifycdn.com/photos/condominium-interior-livingroom_925x.jpg","min_price":77157,"max_price":29765,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Couch,Wood"}
+{"id":"id567075296154","collection_id":"collect622804702959","recommendation_id":"rec658822545592","title":"Cream Sofa","handle":"cream-sofa","category":"Home and Garden","body":"<p>Comfortable cream sofa with wooden base</p>","image_url":"https://burst.shopifycdn.com/photos/condominium-interior-livingroom_925x.jpg","min_price":17157,"max_price":29765,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Couch,Wood"}
 {"index":{"_index":"test-products-schema","_id":"tt212848609966"}}
 {"id":"id212848609966","collection_id":"collect637699472614","recommendation_id":"rec795434053459","title":"Antique Drawers","handle":"antique-drawers","category":"Home and Garden","body":"<p>Antique wooden chest of drawers</p>","image_url":"https://burst.shopifycdn.com/photos/babys-room_925x.jpg","min_price":17145,"max_price":37285,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Antique,Bedroom"}
 {"index":{"_index":"test-products-schema","_id":"tt385652141014"}}
-{"id":"id385652141014","collection_id":"collect918828328166","recommendation_id":"rec797294412354","title":"White Bed Clothes","handle":"white-bed-clothes","category":"Home and Garden","body":"<p>Sleek white bed clothes</p>","image_url":"https://burst.shopifycdn.com/photos/bright-hotel-room-bed_925x.jpg","min_price":80448,"max_price":66947,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Bed"}
+{"id":"id385652141014","collection_id":"collect918828328166","recommendation_id":"rec797294412354","title":"White Bed Clothes","handle":"white-bed-clothes","category":"Home and Garden","body":"<p>Sleek white bed clothes</p>","image_url":"https://burst.shopifycdn.com/photos/bright-hotel-room-bed_925x.jpg","min_price":20448,"max_price":66947,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Bed"}
 {"index":{"_index":"test-products-schema","_id":"tt892360540279"}}
 {"id":"id892360540279","collection_id":"collect410198304874","recommendation_id":"rec279447263217","title":"Pink Armchair","handle":"pink-armchair","category":"Home and Garden","body":"<p>Stylish pink armchair</p>","image_url":"https://burst.shopifycdn.com/photos/soft-pink-cushioned-armchair-in-stately-salon_925x.jpg","min_price":24897,"max_price":86073,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Chair"}
 {"index":{"_index":"test-products-schema","_id":"tt519146852206"}}
-{"id":"id519146852206","collection_id":"collect610643150838","recommendation_id":"rec106006987705","title":"Wooden Outdoor Table","handle":"wooden-outdoor-table","category":"Home and Garden","body":"<p>Chic wooden outdoor garden table</p>","image_url":"https://burst.shopifycdn.com/photos/cafe-patio_925x.jpg","min_price":53090,"max_price":2359,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Wood,Garden"}
+{"id":"id519146852206","collection_id":"collect610643150838","recommendation_id":"rec106006987705","title":"Wooden Outdoor Table","handle":"wooden-outdoor-table","category":"Home and Garden","body":"<p>Chic wooden outdoor garden table</p>","image_url":"https://burst.shopifycdn.com/photos/cafe-patio_925x.jpg","min_price":23090,"max_price":42359,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Wood,Garden"}
 {"index":{"_index":"test-products-schema","_id":"tt614894543624"}}
 {"id":"id614894543624","collection_id":"collect560038519933","recommendation_id":"rec912690465668","title":"Brown Throw Pillows","handle":"brown-throw-pillows","category":"Home and Garden","body":"<p>Stylish brown throw pillows</p>","image_url":"https://burst.shopifycdn.com/photos/bedroom-bed-with-brown-throw-pillows_925x.jpg","min_price":29745,"max_price":93857,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Pillows"}
 {"index":{"_index":"test-products-schema","_id":"tt941770291922"}}
@@ -482,77 +623,77 @@ POST _bulk
 {"index":{"_index":"test-products-schema","_id":"tt791126029330"}}
 {"id":"id791126029330","collection_id":"collect143347644886","recommendation_id":"rec899214100923","title":"Gardening hand trowel","handle":"gardening-hand-trowel","category":"Home and Garden","body":"<p>Metal gardening hand trowel with wooden handle</p>","image_url":"https://burst.shopifycdn.com/photos/spring-gardening-set-up_925x.jpg","min_price":31027,"max_price":78784,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Plants"}
 {"index":{"_index":"test-products-schema","_id":"tt774659196112"}}
-{"id":"id774659196112","collection_id":"collect885119919055","recommendation_id":"rec876866965206","title":"Biodegradable cardboard pots","handle":"biodegradable-cardboard-pots","category":"Home and Garden","body":"<p>Biodegradable outdoor cardboard pots</p>","image_url":"https://burst.shopifycdn.com/photos/potted-seeds_925x.jpg","min_price":62395,"max_price":32330,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Garden,Plants"}
+{"id":"id774659196112","collection_id":"collect885119919055","recommendation_id":"rec876866965206","title":"Biodegradable cardboard pots","handle":"biodegradable-cardboard-pots","category":"Home and Garden","body":"<p>Biodegradable outdoor cardboard pots</p>","image_url":"https://burst.shopifycdn.com/photos/potted-seeds_925x.jpg","min_price":12395,"max_price":32330,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Garden,Plants"}
 {"index":{"_index":"test-products-schema","_id":"tt671645092686"}}
 {"id":"id671645092686","collection_id":"collect622804702959","recommendation_id":"rec997893721059","title":"Grey Sofa","handle":"grey-sofa","category":"Home and Garden","body":"<p>Large four seater grey sofa</p>","image_url":"https://burst.shopifycdn.com/photos/large-grey-sofa-by-brick-wall_925x.jpg","min_price":30187,"max_price":97003,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Sofa"}
 {"index":{"_index":"test-products-schema","_id":"tt785225295876"}}
 {"id":"id785225295876","collection_id":"collect637699472614","recommendation_id":"rec315784130696","title":"Wooden outdoor slats","handle":"wooden-outdoor-slats","category":"Home and Garden","body":"<p>Wooden outdoor fencing slats</p>","image_url":"https://burst.shopifycdn.com/photos/house-plant-on-wooden-slat-wall_925x.jpg","min_price":25852,"max_price":97859,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Wood,Garden"}
 {"index":{"_index":"test-products-schema","_id":"tt595442686724"}}
-{"id":"id595442686724","collection_id":"collect918828328166","recommendation_id":"rec609710110631","title":"Wooden Fence","handle":"wooden-fence","category":"Home and Garden","body":"<p>Wooden garden fence</p>","image_url":"https://burst.shopifycdn.com/photos/picket-fence-flowers_925x.jpg","min_price":80814,"max_price":21713,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Garden,Wood"}
+{"id":"id595442686724","collection_id":"collect918828328166","recommendation_id":"rec609710110631","title":"Wooden Fence","handle":"wooden-fence","category":"Home and Garden","body":"<p>Wooden garden fence</p>","image_url":"https://burst.shopifycdn.com/photos/picket-fence-flowers_925x.jpg","min_price":10814,"max_price":21713,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Garden,Wood"}
 {"index":{"_index":"test-products-schema","_id":"tt426721775692"}}
-{"id":"id426721775692","collection_id":"collect410198304874","recommendation_id":"rec855159456158","title":"Yellow Sofa","handle":"yellow-sofa","category":"Home and Garden","body":"<p>Two seater yellow sofa with wooden legs</p>","image_url":"https://burst.shopifycdn.com/photos/yellow-couch-by-black-and-white-mural_925x.jpg","min_price":70950,"max_price":58180,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Sofa"}
+{"id":"id426721775692","collection_id":"collect410198304874","recommendation_id":"rec855159456158","title":"Yellow Sofa","handle":"yellow-sofa","category":"Home and Garden","body":"<p>Two seater yellow sofa with wooden legs</p>","image_url":"https://burst.shopifycdn.com/photos/yellow-couch-by-black-and-white-mural_925x.jpg","min_price":20950,"max_price":58180,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Sofa"}
 {"index":{"_index":"test-products-schema","_id":"tt982333708229"}}
-{"id":"id982333708229","collection_id":"collect610643150838","recommendation_id":"rec669466034037","title":"Knitted Throw Pillows","handle":"knitted-throw-pillows","category":"Home and Garden","body":"<p>Homemade knitted throw pillows in a variety of colors</p>","image_url":"https://burst.shopifycdn.com/photos/yellow-sofa-with-throw-pillows_925x.jpg","min_price":90160,"max_price":61026,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Pillows"}
+{"id":"id982333708229","collection_id":"collect610643150838","recommendation_id":"rec669466034037","title":"Knitted Throw Pillows","handle":"knitted-throw-pillows","category":"Home and Garden","body":"<p>Homemade knitted throw pillows in a variety of colors</p>","image_url":"https://burst.shopifycdn.com/photos/yellow-sofa-with-throw-pillows_925x.jpg","min_price":10160,"max_price":61026,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Pillows"}
 {"index":{"_index":"test-products-schema","_id":"tt529822730817"}}
 {"id":"id529822730817","collection_id":"collect560038519933","recommendation_id":"rec320273734357","title":"Vanilla candle","handle":"vanilla-candle","category":"Home and Garden","body":"<p>Vanilla scent candle in jar</p>","image_url":"https://burst.shopifycdn.com/photos/diy-organic-candle_925x.jpg","min_price":19738,"max_price":81376,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Candle"}
 {"index":{"_index":"test-products-schema","_id":"tt591044367157"}}
-{"id":"id591044367157","collection_id":"collect603884146130","recommendation_id":"rec306010418153","title":"Black Beanbag","handle":"black-bean-bag","category":"Home and Garden","body":"<p>Black leather beanbag</p>","image_url":"https://burst.shopifycdn.com/photos/comfortable-living-room-cat_925x.jpg","min_price":40009,"max_price":22774,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Black,Leather"}
+{"id":"id591044367157","collection_id":"collect603884146130","recommendation_id":"rec306010418153","title":"Black Beanbag","handle":"black-bean-bag","category":"Home and Garden","body":"<p>Black leather beanbag</p>","image_url":"https://burst.shopifycdn.com/photos/comfortable-living-room-cat_925x.jpg","min_price":10009,"max_price":22774,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Black,Leather"}
 {"index":{"_index":"test-products-schema","_id":"tt948892247653"}}
 {"id":"id948892247653","collection_id":"collect801544455200","recommendation_id":"rec599933899254","title":"Bedside Table","handle":"bedside-table","category":"Home and Garden","body":"<p>Wooden bedside table</p>","image_url":"https://burst.shopifycdn.com/photos/dark-wall-bedside-table_925x.jpg","min_price":11144,"max_price":83147,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"Wood,Bedroom"}
 {"index":{"_index":"test-products-schema","_id":"tt700761527000"}}
-{"id":"id215929509837","collection_id":"collect201323722042","recommendation_id":"rec255111189436","title":"7 シャクラブレスレット","handle":"chain-bracelet","category":"ブレスレット","body":"7 chakra bracelet, in blue or black.","image_url":"https://burst.shopifycdn.com/photos/7-chakra-bracelet_925x.jpg","min_price":99448,"max_price":89637,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ビーズ"}
+{"id":"id215929509837","collection_id":"collect201323722042","recommendation_id":"rec255111189436","title":"7 シャクラブレスレット","handle":"chain-bracelet","category":"ブレスレット","body":"7 chakra bracelet, in blue or black.","image_url":"https://burst.shopifycdn.com/photos/7-chakra-bracelet_925x.jpg","min_price":39448,"max_price":89637,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ビーズ"}
 {"index":{"_index":"test-products-schema","_id":"tt895860841556"}}
-{"id":"id627928608743","collection_id":"collect572973419232","recommendation_id":"rec481868523832","title":"8 シャクラ ブレスレット","handle":"chain-bracelet","category":"ブレスレット","body":"","image_url":"https://burst.shopifycdn.com/photos/navy-blue-chakra-bracelet_925x.jpg","min_price":44834,"max_price":50938,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id627928608743","collection_id":"collect572973419232","recommendation_id":"rec481868523832","title":"8 シャクラ ブレスレット","handle":"chain-bracelet","category":"ブレスレット","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/navy-blue-chakra-bracelet_925x.jpg","min_price":44834,"max_price":50938,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt640628804571"}}
 {"id":"id563839184132","collection_id":"collect418142851116","recommendation_id":"rec357308750104","title":"アンカー ブレスレット メンズ","handle":"leather-anchor","category":"ブレスレット","body":"Black leather bracelet with gold or silver anchor for men.","image_url":"https://burst.shopifycdn.com/photos/anchor-bracelet-mens_925x.jpg","min_price":16878,"max_price":86280,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"アンカー、ゴールド、レザー、シルバー"}
 {"index":{"_index":"test-products-schema","_id":"tt555127486685"}}
-{"id":"id529149851620","collection_id":"collect793328126745","recommendation_id":"rec260361886867","title":"アンカー ブレスレット メンズ","handle":"leather-anchor","category":"ブレスレット","body":"","image_url":"https://burst.shopifycdn.com/photos/anchor-bracelet-for-men_925x.jpg","min_price":12182,"max_price":60692,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id529149851620","collection_id":"collect793328126745","recommendation_id":"rec260361886867","title":"アンカー ブレスレット メンズ","handle":"leather-anchor","category":"ブレスレット","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/anchor-bracelet-for-men_925x.jpg","min_price":12182,"max_price":60692,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt923823250867"}}
-{"id":"id211382680763","collection_id":"collect546778162535","recommendation_id":"rec411596495053","title":"アンカー ブレスレット メンズ","handle":"leather-anchor","category":"ブレスレット","body":"","image_url":"https://burst.shopifycdn.com/photos/leather-anchor-bracelet-for-men_925x.jpg","min_price":42646,"max_price":24021,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id211382680763","collection_id":"collect546778162535","recommendation_id":"rec411596495053","title":"アンカー ブレスレット メンズ","handle":"leather-anchor","category":"ブレスレット","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/leather-anchor-bracelet-for-men_925x.jpg","min_price":12646,"max_price":24021,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt255955239595"}}
 {"id":"id196863296167","collection_id":"collect118369762765","recommendation_id":"rec444062558189","title":"バングル ブレスレット","handle":"bangle-bracelet","category":"ブレスレット","body":"Gold bangle bracelet with studded jewels.","image_url":"https://burst.shopifycdn.com/photos/bangle-bracelet-with-jewels_925x.jpg","min_price":28706,"max_price":70841,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ダイヤモンド、宝石、ゴールド"}
 {"index":{"_index":"test-products-schema","_id":"tt858950530029"}}
-{"id":"id658328035585","collection_id":"collect406577337055","recommendation_id":"rec904056740878","title":"ボヘミアン バングル ブレスレット","handle":"bangle-bracelet-with-feathers","category":"ブレスレット","body":"Gold boho bangle bracelet with multicolor tassels.","image_url":"https://burst.shopifycdn.com/photos/bangle-bracelet-with-feathers_925x.jpg","min_price":45506,"max_price":38344,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"金"}
+{"id":"id658328035585","collection_id":"collect406577337055","recommendation_id":"rec904056740878","title":"ボヘミアン バングル ブレスレット","handle":"bangle-bracelet-with-feathers","category":"ブレスレット","body":"Gold boho bangle bracelet with multicolor tassels.","image_url":"https://burst.shopifycdn.com/photos/bangle-bracelet-with-feathers_925x.jpg","min_price":15506,"max_price":38344,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"金"}
 {"index":{"_index":"test-products-schema","_id":"tt546936226620"}}
 {"id":"id952117356812","collection_id":"collect568312282387","recommendation_id":"rec415977256969","title":"ボヘミアン イヤリング","handle":"boho-earrings","category":"イヤリング","body":"Turquoise globe earrings on 14k gold hooks.","image_url":"https://burst.shopifycdn.com/photos/boho-earrings_925x.jpg","min_price":46246,"max_price":52010,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"シルバー、ターコイズ"}
 {"index":{"_index":"test-products-schema","_id":"tt262998871466"}}
-{"id":"id337086368097","collection_id":"collect542641824539","recommendation_id":"rec501334483600","title":"バングル ブレスレット","handle":"bangle-bracelet","category":"ブレスレット","body":"","image_url":"https://burst.shopifycdn.com/photos/inspired-woman_925x.jpg","min_price":11377,"max_price":35390,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id337086368097","collection_id":"collect542641824539","recommendation_id":"rec501334483600","title":"バングル ブレスレット","handle":"bangle-bracelet","category":"ブレスレット","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/inspired-woman_925x.jpg","min_price":11377,"max_price":35390,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt702067444123"}}
-{"id":"id471255164938","collection_id":"collect307471171438","recommendation_id":"rec369942724652","title":"ボヘミアン バングル ブレスレット","handle":"bangle-bracelet-with-feathers","category":"ブレスレット","body":"","image_url":"https://burst.shopifycdn.com/photos/necklace-earrings-set_925x.jpg","min_price":96475,"max_price":63463,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id471255164938","collection_id":"collect307471171438","recommendation_id":"rec369942724652","title":"ボヘミアン バングル ブレスレット","handle":"bangle-bracelet-with-feathers","category":"ブレスレット","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/necklace-earrings-set_925x.jpg","min_price":16475,"max_price":63463,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt561413062028"}}
 {"id":"id120766446502","collection_id":"collect405030980039","recommendation_id":"rec181328938192","title":"ビーズ付きチョーカー","handle":"choker-with-bead","category":"ネックレス","body":"Black choker necklace with 14k gold bead.","image_url":"https://burst.shopifycdn.com/photos/black-choker-with-bead_925x.jpg","min_price":14709,"max_price":60846,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、レザー"}
 {"index":{"_index":"test-products-schema","_id":"tt513439479466"}}
-{"id":"id847320758557","collection_id":"collect557222975405","recommendation_id":"rec630920653879","title":"ビーズ付きチョーカー","handle":"choker-with-bead","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/choker-with-bead_925x.jpg","min_price":69940,"max_price":33481,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id847320758557","collection_id":"collect557222975405","recommendation_id":"rec630920653879","title":"ビーズ付きチョーカー","handle":"choker-with-bead","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/choker-with-bead_925x.jpg","min_price":9940,"max_price":33481,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt335720753958"}}
 {"id":"id487248368437","collection_id":"collect714807163099","recommendation_id":"rec797434641127","title":"ゴールドペンダント付きチョーカー","handle":"choker-with-gold-pendant","category":"ネックレス","body":"Black cord choker with gold pendant. Beautifully died black leather shapes a choker necklace with findings of 14k yellow gold, displaying gold pendant in a gorgeous balance of dark and light, delicate and strong.<ul>\n<li>14k yellow gold</li>\n<li>Leather</li>\n<li>Length, 12\" with 2.5\" extender</li>\n<li>Width, 0.3\"</li>\n<li>Lobster clasp</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/choker-with-gold-pendant_925x.jpg","min_price":62155,"max_price":80779,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"チョーカー、ゴールド、レザー、ペンダント"}
 {"index":{"_index":"test-products-schema","_id":"tt454355367942"}}
-{"id":"id379013343905","collection_id":"collect768111764261","recommendation_id":"rec273637314123","title":"ゴールドペンダント付きチョーカー","handle":"choker-with-gold-pendant","category":"ネックレス","body":"Black cord choker with gold pendant. Beautifully died black leather shapes a choker necklace with findings of 14k yellow gold, displaying gold pendant in a gorgeous balance of dark and light, delicate and strong.<ul>\n<li>14k yellow gold</li>\n<li>Leather</li>\n<li>Length, 12\" with 2.5\" extender</li>\n<li>Width, 0.3\"</li>\n<li>Lobster clasp</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/choker-pendant-closeup_925x.jpg","min_price":48477,"max_price":58131,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id379013343905","collection_id":"collect768111764261","recommendation_id":"rec273637314123","title":"ゴールドペンダント付きチョーカー","handle":"choker-with-gold-pendant","category":"ネックレス","body":"Black cord choker with gold pendant. Beautifully died black leather shapes a choker necklace with findings of 14k yellow gold, displaying gold pendant in a gorgeous balance of dark and light, delicate and strong.<ul>\n<li>14k yellow gold</li>\n<li>Leather</li>\n<li>Length, 12\" with 2.5\" extender</li>\n<li>Width, 0.3\"</li>\n<li>Lobster clasp</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/choker-pendant-closeup_925x.jpg","min_price":28477,"max_price":58131,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt208231662080"}}
-{"id":"id915007473768","collection_id":"collect669270681133","recommendation_id":"rec283110896317","title":"三角チョーカー","handle":"choker-with-triangle","category":"ネックレス","body":"Black choker with silver triangle pendant.","image_url":"https://burst.shopifycdn.com/photos/choker-with-triangle_925x.jpg","min_price":40184,"max_price":44859,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"レザー、シルバー、トライアングル"}
+{"id":"id915007473768","collection_id":"collect669270681133","recommendation_id":"rec283110896317","title":"三角チョーカー","handle":"choker-with-triangle","category":"ネックレス","body":"Black choker with silver triangle pendant.","image_url":"https://burst.shopifycdn.com/photos/choker-with-triangle_925x.jpg","min_price":30184,"max_price":44859,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"レザー、シルバー、トライアングル"}
 {"index":{"_index":"test-products-schema","_id":"tt131771397770"}}
 {"id":"id888765137806","collection_id":"collect694604354784","recommendation_id":"rec482098907439","title":"可憐なゴールドネックレス","handle":"dainty-gold-neclace","category":"ネックレス","body":"Dainty gold necklace with two pendants.","image_url":"https://burst.shopifycdn.com/photos/dainty-gold-necklace_925x.jpg","min_price":23224,"max_price":38186,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、ペンダント"}
 {"index":{"_index":"test-products-schema","_id":"tt814738131730"}}
-{"id":"id283139380507","collection_id":"collect999954420599","recommendation_id":"rec345823355564","title":"可憐なゴールドネックレス","handle":"dainty-gold-neclace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/womens-gold-necklace_925x.jpg","min_price":95101,"max_price":21725,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id283139380507","collection_id":"collect999954420599","recommendation_id":"rec345823355564","title":"可憐なゴールドネックレス","handle":"dainty-gold-neclace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/womens-gold-necklace_925x.jpg","min_price":15101,"max_price":21725,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt456337523214"}}
-{"id":"id134074480661","collection_id":"collect560634353706","recommendation_id":"rec912898452662","title":"ドリームキャッチャー ペンダント ネックレス","handle":"dreamcatcher-pendant-necklace","category":"ネックレス","body":"Turquoise beaded dream catcher necklace. Silver feathers adorn this beautiful dream catcher, which move and twinkle as you walk.","image_url":"https://burst.shopifycdn.com/photos/dreamcatcher-pendant-necklace_925x.jpg","min_price":70405,"max_price":26950,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ドリームキャッチャー、ペンダント、シルバー、ターコイズ"}
+{"id":"id134074480661","collection_id":"collect560634353706","recommendation_id":"rec912898452662","title":"ドリームキャッチャー ペンダント ネックレス","handle":"dreamcatcher-pendant-necklace","category":"ネックレス","body":"Turquoise beaded dream catcher necklace. Silver feathers adorn this beautiful dream catcher, which move and twinkle as you walk.","image_url":"https://burst.shopifycdn.com/photos/dreamcatcher-pendant-necklace_925x.jpg","min_price":10405,"max_price":26950,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ドリームキャッチャー、ペンダント、シルバー、ターコイズ"}
 {"index":{"_index":"test-products-schema","_id":"tt188030570784"}}
-{"id":"id728356379708","collection_id":"collect963415693147","recommendation_id":"rec757010258149","title":"ドリームキャッチャー ペンダント ネックレス","handle":"dreamcatcher-pendant-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/gold-dream-catcher-necklace_925x.jpg","min_price":29707,"max_price":49062,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
+{"id":"id728356379708","collection_id":"collect963415693147","recommendation_id":"rec757010258149","title":"ドリームキャッチャー ペンダント ネックレス","handle":"dreamcatcher-pendant-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/gold-dream-catcher-necklace_925x.jpg","min_price":29707,"max_price":49062,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt523177713730"}}
-{"id":"id432397859581","collection_id":"collect290739845186","recommendation_id":"rec507515427873","title":"ギャラクシーイヤリング","handle":"galaxy-earrings","category":"イヤリング","body":"One set of galaxy earrings, with sterling silver clasps.","image_url":"https://burst.shopifycdn.com/photos/galaxy-earrings_925x.jpg","min_price":41121,"max_price":23513,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ブルー、ギャラクシー、シルバー"}
+{"id":"id432397859581","collection_id":"collect290739845186","recommendation_id":"rec507515427873","title":"ギャラクシーイヤリング","handle":"galaxy-earrings","category":"イヤリング","body":"One set of galaxy earrings, with sterling silver clasps.","image_url":"https://burst.shopifycdn.com/photos/galaxy-earrings_925x.jpg","min_price":11121,"max_price":23513,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ブルー、ギャラクシー、シルバー"}
 {"index":{"_index":"test-products-schema","_id":"tt652317621495"}}
 {"id":"id176940806734","collection_id":"collect242909829836","recommendation_id":"rec199324135706","title":"ジェムストーンネックレス","handle":"gemstone","category":"ネックレス","body":"<p>Gemstone pendant, housed in sterling silver, with sterling silver chain.</p>\n<ul>\n<li>Sterling silver chain, 14 inches</li>\n<li>Turquoise or Quartz</li>\n<li>Boho Chic</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/blue-gemstone-pendant_925x.jpg","min_price":10143,"max_price":52468,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ブルー、ジェム、パープル、シルバー、ターコイズ"}
 {"index":{"_index":"test-products-schema","_id":"tt157648700931"}}
 {"id":"id790974255080","collection_id":"collect999200678977","recommendation_id":"rec940050084460","title":"ジェムストーンネックレス","handle":"gemstone","category":"ネックレス","body":"<p>Gemstone pendant, housed in sterling silver, with sterling silver chain.</p>\n<ul>\n<li>Sterling silver chain, 14 inches</li>\n<li>Turquoise or Quartz</li>\n<li>Boho Chic</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/gemstone-necklace_925x.jpg","min_price":27202,"max_price":47974,"option1_name":"set-type","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"収納付き,⻑さが短い"}
 {"index":{"_index":"test-products-schema","_id":"tt809980303424"}}
-{"id":"id728431750788","collection_id":"collect787016511737","recommendation_id":"rec940239524187","title":"ジェムストーンネックレス","handle":"gemstone","category":"ネックレス","body":"<p>Gemstone pendant, housed in sterling silver, with sterling silver chain.</p>\n<ul>\n<li>Sterling silver chain, 14 inches</li>\n<li>Turquoise or Quartz</li>\n<li>Boho Chic</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/womens-necklace_925x.jpg","min_price":84288,"max_price":48883,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id728431750788","collection_id":"collect787016511737","recommendation_id":"rec940239524187","title":"ジェムストーンネックレス","handle":"gemstone","category":"ネックレス","body":"<p>Gemstone pendant, housed in sterling silver, with sterling silver chain.</p>\n<ul>\n<li>Sterling silver chain, 14 inches</li>\n<li>Turquoise or Quartz</li>\n<li>Boho Chic</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/womens-necklace_925x.jpg","min_price":4288,"max_price":48883,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt376233923209"}}
 {"id":"id562750738211","collection_id":"collect468908514466","recommendation_id":"rec514202424329","title":"ジェムストーンネックレス","handle":"gemstone","category":"ネックレス","body":"<p>Gemstone pendant, housed in sterling silver, with sterling silver chain.</p>\n<ul>\n<li>Sterling silver chain, 14 inches</li>\n<li>Turquoise or Quartz</li>\n<li>Boho Chic</li>\n<li>Made in USA</li>\n</ul>","image_url":"https://burst.shopifycdn.com/photos/purple-gemstone-necklace_925x.jpg","min_price":30889,"max_price":50435,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt758306652711"}}
-{"id":"id965691392937","collection_id":"collect470956346330","recommendation_id":"rec602250423560","title":"ゴールドバードネックレス","handle":"gold-bird-necklace","category":"ネックレス","body":"14k Gold delicate necklace, with bird between two chains.","image_url":"https://burst.shopifycdn.com/photos/gold-bird-necklace_925x.jpg","min_price":77853,"max_price":59974,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"鳥、ゴールド"}
+{"id":"id965691392937","collection_id":"collect470956346330","recommendation_id":"rec602250423560","title":"ゴールドバードネックレス","handle":"gold-bird-necklace","category":"ネックレス","body":"14k Gold delicate necklace, with bird between two chains.","image_url":"https://burst.shopifycdn.com/photos/gold-bird-necklace_925x.jpg","min_price":17853,"max_price":59974,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"鳥、ゴールド"}
 {"index":{"_index":"test-products-schema","_id":"tt586876580426"}}
 {"id":"id671588909146","collection_id":"collect300857526048","recommendation_id":"rec556511990393","title":"ゴールドエレファントイヤリング","handle":"looped-earrings","category":"イヤリング","body":"Small 14k gold elephant earrings, with opal ear detail.","image_url":"https://burst.shopifycdn.com/photos/elephant-earrings_925x.jpg","min_price":33855,"max_price":51598,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、シルバー"}
 {"index":{"_index":"test-products-schema","_id":"tt147885275253"}}
-{"id":"id256674215061","collection_id":"collect882073667402","recommendation_id":"rec185270303458","title":"ガーディアンエンジェル イヤリング","handle":"guardian-angel-earrings","category":"イヤリング","body":"Sterling silver guardian angel earrings with diamond gemstones.","image_url":"https://burst.shopifycdn.com/photos/guardian-angel-earrings_925x.jpg","min_price":89217,"max_price":56451,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"エンジェル、シルバー"}
+{"id":"id256674215061","collection_id":"collect882073667402","recommendation_id":"rec185270303458","title":"ガーディアンエンジェル イヤリング","handle":"guardian-angel-earrings","category":"イヤリング","body":"Sterling silver guardian angel earrings with diamond gemstones.","image_url":"https://burst.shopifycdn.com/photos/guardian-angel-earrings_925x.jpg","min_price":19217,"max_price":56451,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"エンジェル、シルバー"}
 {"index":{"_index":"test-products-schema","_id":"tt420360864765"}}
 {"id":"id345445544128","collection_id":"collect251042257076","recommendation_id":"rec899863799966","title":"ガーディアンエンジェル イヤリング","handle":"guardian-angel-earrings","category":"イヤリング","body":"Sterling silver guardian angel earrings with diamond gemstones.","image_url":"https://burst.shopifycdn.com/photos/guardian-angel-earring-closeup_925x.jpg","min_price":54274,"max_price":71183,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt707849356049"}}
@@ -560,29 +701,33 @@ POST _bulk
 {"index":{"_index":"test-products-schema","_id":"tt148388443575"}}
 {"id":"id390030315454","collection_id":"collect639393574340","recommendation_id":"rec420889474108","title":"ムーンチャームブレスレット","handle":"moon-charm-bracelet","category":"ブレスレット","body":"Moon 14k gold chain friendship bracelet.","image_url":"https://burst.shopifycdn.com/photos/moon-friendship-bracelet_925x.jpg","min_price":47804,"max_price":94073,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt301544590732"}}
-{"id":"id338360569337","collection_id":"collect508227734306","recommendation_id":"rec596526146114","title":"ムーンチャームブレスレット","handle":"moon-charm-bracelet","category":"ブレスレット","body":"Moon 14k gold chain friendship bracelet.","image_url":"https://burst.shopifycdn.com/photos/womens-hand-charm-bracelet_925x.jpg","min_price":80455,"max_price":43839,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id338360569337","collection_id":"collect508227734306","recommendation_id":"rec596526146114","title":"ムーンチャームブレスレット","handle":"moon-charm-bracelet","category":"ブレスレット","body":"Moon 14k gold chain friendship bracelet.","image_url":"https://burst.shopifycdn.com/photos/womens-hand-charm-bracelet_925x.jpg","min_price":10455,"max_price":43839,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt139376068474"}}
-{"id":"id177533241298","collection_id":"collect692848251904","recommendation_id":"rec320465767474","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"Sterling silver origami crane necklace.","image_url":"https://burst.shopifycdn.com/photos/origami-crane-necklace-gold_925x.jpg","min_price":89565,"max_price":15460,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"鶴、折り紙、シルバー"}
+{"id":"id177533241298","collection_id":"collect692848251904","recommendation_id":"rec320465767474","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"Sterling silver origami crane necklace.","image_url":"https://burst.shopifycdn.com/photos/origami-crane-necklace-gold_925x.jpg","min_price":9565,"max_price":15460,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"鶴、折り紙、シルバー"}
 {"index":{"_index":"test-products-schema","_id":"tt810624354181"}}
-{"id":"id372426867933","collection_id":"collect866303365261","recommendation_id":"rec393426374443","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/silver-origami-necklace_925x.jpg","min_price":15543,"max_price":59200,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id372426867933","collection_id":"collect866303365261","recommendation_id":"rec393426374443","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/silver-origami-necklace_925x.jpg","min_price":15543,"max_price":59200,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt752478249441"}}
-{"id":"id241948668968","collection_id":"collect279408198869","recommendation_id":"rec939631823257","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/origami-crane-necklace_925x.jpg","min_price":62515,"max_price":68830,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id241948668968","collection_id":"collect279408198869","recommendation_id":"rec939631823257","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/origami-crane-necklace_925x.jpg","min_price":32515,"max_price":68830,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt956249851464"}}
-{"id":"id117633147097","collection_id":"collect873333682369","recommendation_id":"rec388179817839","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/womens-green-turtleneck_925x.jpg","min_price":94603,"max_price":88034,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id117633147097","collection_id":"collect873333682369","recommendation_id":"rec388179817839","title":"折り鶴ネックレス","handle":"origami-crane-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/womens-green-turtleneck_925x.jpg","min_price":34603,"max_price":88034,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt576077183426"}}
-{"id":"id810706864118","collection_id":"collect843951672228","recommendation_id":"rec370272138860","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"14k gold and turquoise necklace. Stunning beaded turquoise on gold and pendant filled double chain design.","image_url":"https://burst.shopifycdn.com/photos/pretty-gold-necklace_925x.jpg","min_price":71736,"max_price":11346,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、ターコイズ"}
+{"id":"id810706864118","collection_id":"collect843951672228","recommendation_id":"rec370272138860","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"14k gold and turquoise necklace. Stunning beaded turquoise on gold and pendant filled double chain design.","image_url":"https://burst.shopifycdn.com/photos/pretty-gold-necklace_925x.jpg","min_price":1736,"max_price":11346,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、ターコイズ"}
 {"index":{"_index":"test-products-schema","_id":"tt851804305358"}}
-{"id":"id595808687896","collection_id":"collect941592984810","recommendation_id":"rec904177939160","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"15k gold and turquoise necklace. Stunning beaded turquoise on gold and pendant filled double chain design.","image_url":"https://burst.shopifycdn.com/photos/necklace-earrings-set_925x.jpg","min_price":24702,"max_price":12679,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id595808687896","collection_id":"collect941592984810","recommendation_id":"rec904177939160","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"15k gold and turquoise necklace. Stunning beaded turquoise on gold and pendant filled double chain design.","image_url":"https://burst.shopifycdn.com/photos/necklace-earrings-set_925x.jpg","min_price":4702,"max_price":12679,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt472179490631"}}
-{"id":"id599340685960","collection_id":"collect741341150706","recommendation_id":"rec700396109864","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/inspired-woman_925x.jpg","min_price":47717,"max_price":47836,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id599340685960","collection_id":"collect741341150706","recommendation_id":"rec700396109864","title":"プリティゴールドネックレス","handle":"pretty-gold-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/inspired-woman_925x.jpg","min_price":4717,"max_price":47836,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt544051654114"}}
-{"id":"id678734935938","collection_id":"collect663194777942","recommendation_id":"rec574306537562","title":"シルバー スレッダー ネックレス","handle":"silver-threader-necklace","category":"ネックレス","body":"Sterling silver chain thread through circle necklace.","image_url":"https://burst.shopifycdn.com/photos/silver-threader-necklace_925x.jpg","min_price":77472,"max_price":18529,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"銀"}
+{"id":"id678734935938","collection_id":"collect663194777942","recommendation_id":"rec574306537562","title":"シルバー スレッダー ネックレス","handle":"silver-threader-necklace","category":"ネックレス","body":"Sterling silver chain thread through circle necklace.","image_url":"https://burst.shopifycdn.com/photos/silver-threader-necklace_925x.jpg","min_price":7472,"max_price":18529,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"銀"}
 {"index":{"_index":"test-products-schema","_id":"tt883391593524"}}
-{"id":"id126645402060","collection_id":"collect941366185982","recommendation_id":"rec334356937566","title":"シルバー スレッダー ネックレス","handle":"silver-threader-necklace","category":"ネックレス","body":"","image_url":"https://burst.shopifycdn.com/photos/threader-necklace-closeup_925x.jpg","min_price":99182,"max_price":73909,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
+{"id":"id126645402060","collection_id":"collect941366185982","recommendation_id":"rec334356937566","title":"シルバー スレッダー ネックレス","handle":"silver-threader-necklace","category":"ネックレス","body":"イトグレー ナットブ","image_url":"https://burst.shopifycdn.com/photos/threader-necklace-closeup_925x.jpg","min_price":29182,"max_price":73909,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":""}
 {"index":{"_index":"test-products-schema","_id":"tt682205283214"}}
-{"id":"id485117274926","collection_id":"collect201619629266","recommendation_id":"rec538343735547","title":"スタイリッシュなサマーネックレス","handle":"stylish-summer-neclace","category":"ネックレス","body":"Double chained gold boho necklace with turquoise pendant.","image_url":"https://burst.shopifycdn.com/photos/stylish-summer-necklace_925x.jpg","min_price":65552,"max_price":45752,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、ターコイズ"}
+{"id":"id485117274926","collection_id":"collect201619629266","recommendation_id":"rec538343735547","title":"スタイリッシュなサマーネックレス","handle":"stylish-summer-neclace","category":"ネックレス","body":"Double chained gold boho necklace with turquoise pendant.","image_url":"https://burst.shopifycdn.com/photos/stylish-summer-necklace_925x.jpg","min_price":25552,"max_price":45752,"option1_name":"","option1_values":["ゾーンコイルのセット","ボンネットコイルのセット","ポケットコイルのセット","プレミアムボンネルのセット","プレミアムポケットのセット"],"option2_name":"size","option2_values":["シングル","セミダブル","ダブル","クイーン","キング"],"option3_name":"flame-color","option3_values":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"option4_name":"mattress-color","option4_values":["ホワイト系","ブラック系"],"option5_name":"installation","option5_values":["なし","あり"],"option6_name":null,"option6_values":null,"colors":["ライトグレー","ウォルナットブラウン","シナモングレージュ","ノルディックオーク","ダークグレー"],"tags":"ゴールド、ターコイズ"}
 
-------------------------------------------------
+--------------------------------
+
+POST test-products-schema/_update_by_query
+
+--------------------------------
 
 GET test-products-schema/_search 
 { 
