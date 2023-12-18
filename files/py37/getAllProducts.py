@@ -28,25 +28,27 @@ def lambda_handler(event, context):
     if "queryStringParameters" in event and event["queryStringParameters"] is not None:
         if "title" in event["queryStringParameters"]:
             titleValue = event["queryStringParameters"]["title"]
+            convertedTitleValue = " ".join(titleValue.split("&"))
+            
             titleAndBodyQuery = {
                 "multi_match": {
-                    "query": titleValue,
+                    "query": convertedTitleValue,
                     "fields": [
                         "title.ngram^1",
                         "body.ngram^1"
                     ],
-                    "type": "phrase"
+                    "type": "cross_fields"
                 }
             }
             
             titleAndBodyQueryShould = {
                 "multi_match": {
-                    "query": titleValue,
+                    "query": convertedTitleValue,
                     "fields": [
                         "title^1",
                         "body^1"
                     ],
-                    "type": "phrase"
+                    "type": "cross_fields"
                 }
             }
     
