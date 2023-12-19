@@ -37,7 +37,8 @@ def lambda_handler(event, context):
                         "title.ngram^1",
                         "body.ngram^1"
                     ],
-                    "type": "cross_fields"
+                    "type": "cross_fields",
+                    "operator": "and",
                 }
             }
             
@@ -48,7 +49,8 @@ def lambda_handler(event, context):
                         "title^1",
                         "body^1"
                     ],
-                    "type": "cross_fields"
+                    "type": "cross_fields",
+                    "operator": "and",
                 }
             }
     
